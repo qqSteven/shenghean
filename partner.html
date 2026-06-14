@@ -375,7 +375,7 @@ document.querySelectorAll('.section-reveal').forEach(function(el){ScrollTrigger.
   var links=menu.querySelectorAll('a');
   for(var i=0;i<links.length;i++){
     links[i].addEventListener('click',closeMenu);
-    links[i].addEventListener('touchstart',closeMenu);
+    // touchstart removed — was blocking navigation
   }
 })();
 </script>
