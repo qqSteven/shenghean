@@ -130,6 +130,57 @@ body:hover #mouseGlow{opacity:1}
 
 
 *{-webkit-tap-highlight-color:transparent}a,button,input,select,textarea,.nav-toggle,.cta-btn,.form-submit,.nav-mobile-menu a{touch-action:manipulation}
+
+
+
+
+
+
+
+/* === 内容区可视背景 === */
+.bg-finance{position:relative;background:linear-gradient(135deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-finance::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(45deg,rgba(200,150,62,0.4) 0,rgba(200,150,62,0.4) 1px,transparent 1px,transparent 40px),
+  radial-gradient(circle at 30% 40%,rgba(0,180,216,0.25) 0,transparent 50%),
+  radial-gradient(circle at 70% 60%,rgba(200,150,62,0.2) 0,transparent 40%)}
+
+.bg-logistics{position:relative;background:linear-gradient(160deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-logistics::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 60% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 25% 70%,rgba(180,140,70,0.2) 0,transparent 40%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.35) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,50px 50px;
+  background-position:0 0,0 0,25px 25px}
+
+.bg-document{position:relative;background:linear-gradient(145deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-document::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent 0,transparent 58px,rgba(200,150,62,0.18) 58px,rgba(200,150,62,0.18) 59px),
+  radial-gradient(ellipse at 70% 30%,rgba(200,160,80,0.3) 0,transparent 60%),
+  radial-gradient(ellipse at 25% 65%,rgba(0,180,216,0.2) 0,transparent 50%)}
+
+.bg-global{position:relative;background:linear-gradient(130deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-global::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 30% 30%,rgba(0,180,216,0.25) 0,transparent 55%),
+  radial-gradient(circle at 70% 70%,rgba(200,150,62,0.22) 0,transparent 50%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.25) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,60px 60px;
+  background-position:0 0,0 0,30px 30px}
+
+.bg-network{position:relative;background:linear-gradient(120deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-network::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 40% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 70% 60%,rgba(0,180,216,0.2) 0,transparent 50%),
+  radial-gradient(circle 4px,rgba(200,150,62,0.3) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,80px 80px;
+  background-position:0 0,0 0,20px 20px}
+
+.bg-finance>.section-inner,.bg-finance>h2,.bg-finance>.content-grid,.bg-finance>.stats-row,.bg-finance>.info-grid,.bg-finance>.cta-banner,.bg-finance>.compare-table,.bg-finance>.cat-grid,.bg-finance>div[class],
+.bg-logistics>.section-inner,.bg-logistics>h2,.bg-logistics>.content-grid,.bg-logistics>.stats-row,.bg-logistics>.info-grid,.bg-logistics>.cta-banner,.bg-logistics>.compare-table,.bg-logistics>.cat-grid,.bg-logistics>div[class],
+.bg-document>.section-inner,.bg-document>h2,.bg-document>.content-grid,.bg-document>.stats-row,.bg-document>.info-grid,.bg-document>.cta-banner,.bg-document>.compare-table,.bg-document>.cat-grid,.bg-document>div[class],
+.bg-global>.section-inner,.bg-global>h2,.bg-global>.content-grid,.bg-global>.stats-row,.bg-global>.info-grid,.bg-global>.cta-banner,.bg-global>.compare-table,.bg-global>.cat-grid,.bg-global>div[class],
+.bg-network>.section-inner,.bg-network>h2,.bg-network>.content-grid,.bg-network>.stats-row,.bg-network>.info-grid,.bg-network>.cta-banner,.bg-network>.compare-table,.bg-network>.cat-grid,.bg-network>div[class]
+{position:relative;z-index:1}
+
 </style>
 </head>
 <body>
@@ -170,28 +221,28 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- Why Partner -->
-<section class="section content-block">
-  <div class="section-inner">
+<section class="bg-network section content-block""
+  <div class="bg-network section-inner">
     <div class="section-label section-reveal">为什么合作</div>
     <h2 class="section-title section-reveal">四大合作<span style="color:var(--gold)">核心优势</span></h2>
     <p class="section-desc section-reveal">乾翔渠道合作计划，让合作伙伴轻松开拓中美跨境贸易市场，享受持续收益。</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem">
-      <div class="info-card section-reveal section-reveal-delay-1">
+      <div class="info-card card-glow section-reveal section-reveal-delay-1">
         <h4>持续稳定收益</h4>
         <div style="font-size:2rem;font-weight:900;color:var(--gold);margin:0.5rem 0">单票结算</div>
         <p>按合作等级享有具有竞争力的服务收益，单票结算透明。每票货物结算清晰，无隐藏扣费，收益稳定可预期。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-2">
+      <div class="info-card card-glow section-reveal section-reveal-delay-2">
         <h4>客户终身保护</h4>
         <div style="font-size:2rem;font-weight:900;color:var(--gold);margin:0.5rem 0">合同期+2年</div>
-        <p>客户开发后享受终身保护：合同期内+结束后2年保护期，违约赔偿合同金额100%。</p>
+        <p>客户开发后享受终身保护：合同期内+结束后2年保护期。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-3">
+      <div class="info-card card-glow section-reveal section-reveal-delay-3">
         <h4>首报备优先</h4>
         <div style="font-size:2rem;font-weight:900;color:var(--gold);margin:0.5rem 0">24h登记</div>
         <p>客户报备24小时内录入登记表，首次报备优先原则，确保您的客户资源安全。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-4">
+      <div class="info-card card-glow section-reveal section-reveal-delay-4">
         <h4>零门槛启动</h4>
         <div style="font-size:2rem;font-weight:900;color:var(--gold);margin:0.5rem 0">无需资质</div>
         <p>合作伙伴无需持有IOR或海关资质，只需拥有跨境贸易客户资源即可合作。</p>
@@ -203,8 +254,8 @@ body:hover #mouseGlow{opacity:1}
 
 
 <!-- Customer Development Scripts -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-network section content-block-alt""
+  <div class="bg-network section-inner">
     <div class="section-label section-reveal">报价案例</div>
     <h2 class="section-title section-reveal">真实<span style="color:var(--gold)">报价案例参考</span></h2>
     <p class="section-desc section-reveal">以下为不同品类的关税优化报价案例，帮助合作伙伴理解服务价值。</p>
@@ -225,8 +276,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- Settlement Process -->
-<section class="section content-block">
-  <div class="section-inner">
+<section class="bg-network section content-block""
+  <div class="bg-network section-inner">
     <div class="section-label section-reveal">结算流程</div>
     <h2 class="section-title section-reveal">标准化<span style="color:var(--gold)">合作结算流程</span></h2>
     <p class="section-desc section-reveal">从客户报备到收益结算，全程透明可控。</p>
@@ -275,34 +326,34 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- Customer Protection -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-network section content-block-alt""
+  <div class="bg-network section-inner">
     <div class="section-label section-reveal">客户保护条款</div>
     <h2 class="section-title section-reveal">三方协议<span style="color:var(--gold)">终身保护机制</span></h2>
     <p class="section-desc section-reveal">乾翔通过严格的协议条款保护合作伙伴的客户资源权益。</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem">
-      <div class="info-card section-reveal section-reveal-delay-1">
+      <div class="info-card card-glow section-reveal section-reveal-delay-1">
         <h4>合同期内保护</h4>
         <p>在合作协议有效期内，乾翔不会主动联系或开发合作伙伴报备的客户。所有业务往来通过合作伙伴进行。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-2">
+      <div class="info-card card-glow section-reveal section-reveal-delay-2">
         <h4>结束后2年保护</h4>
         <p>合作协议终止后，乾翔继续保护合作伙伴的客户资源2年。在此期间，乾翔不会主动开发这些客户。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-3">
+      <div class="info-card card-glow section-reveal section-reveal-delay-3">
         <h4>违约赔偿</h4>
         <p>如乾翔违反客户保护条款，主动开发合作伙伴报备的客户，需赔偿合作伙伴合同金额100%的违约金。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-4">
+      <div class="info-card card-glow section-reveal section-reveal-delay-4">
         <h4>首报备优先</h4>
         <p>同一客户被多个合作伙伴报备时，以首次报备为准。报备信息24小时内录入登记表，确保权益明确。</p>
       </div>
     </div>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-network section content-block""
+  <div class="bg-network section-inner">
     <div class="cta-banner section-reveal">
       <h3>加入乾翔渠道合作计划</h3>
       <p>拥有跨境贸易客户资源？立即联系我们，了解渠道合作详情，开启持续收益之旅。</p>

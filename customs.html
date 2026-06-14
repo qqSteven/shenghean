@@ -143,6 +143,57 @@ body:hover #mouseGlow{opacity:1}
 
 
 *{-webkit-tap-highlight-color:transparent}a,button,input,select,textarea,.nav-toggle,.cta-btn,.form-submit,.nav-mobile-menu a{touch-action:manipulation}
+
+
+
+
+
+
+
+/* === 内容区可视背景 === */
+.bg-finance{position:relative;background:linear-gradient(135deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-finance::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(45deg,rgba(200,150,62,0.4) 0,rgba(200,150,62,0.4) 1px,transparent 1px,transparent 40px),
+  radial-gradient(circle at 30% 40%,rgba(0,180,216,0.25) 0,transparent 50%),
+  radial-gradient(circle at 70% 60%,rgba(200,150,62,0.2) 0,transparent 40%)}
+
+.bg-logistics{position:relative;background:linear-gradient(160deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-logistics::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 60% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 25% 70%,rgba(180,140,70,0.2) 0,transparent 40%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.35) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,50px 50px;
+  background-position:0 0,0 0,25px 25px}
+
+.bg-document{position:relative;background:linear-gradient(145deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-document::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent 0,transparent 58px,rgba(200,150,62,0.18) 58px,rgba(200,150,62,0.18) 59px),
+  radial-gradient(ellipse at 70% 30%,rgba(200,160,80,0.3) 0,transparent 60%),
+  radial-gradient(ellipse at 25% 65%,rgba(0,180,216,0.2) 0,transparent 50%)}
+
+.bg-global{position:relative;background:linear-gradient(130deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-global::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 30% 30%,rgba(0,180,216,0.25) 0,transparent 55%),
+  radial-gradient(circle at 70% 70%,rgba(200,150,62,0.22) 0,transparent 50%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.25) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,60px 60px;
+  background-position:0 0,0 0,30px 30px}
+
+.bg-network{position:relative;background:linear-gradient(120deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-network::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 40% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 70% 60%,rgba(0,180,216,0.2) 0,transparent 50%),
+  radial-gradient(circle 4px,rgba(200,150,62,0.3) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,80px 80px;
+  background-position:0 0,0 0,20px 20px}
+
+.bg-finance>.section-inner,.bg-finance>h2,.bg-finance>.content-grid,.bg-finance>.stats-row,.bg-finance>.info-grid,.bg-finance>.cta-banner,.bg-finance>.compare-table,.bg-finance>.cat-grid,.bg-finance>div[class],
+.bg-logistics>.section-inner,.bg-logistics>h2,.bg-logistics>.content-grid,.bg-logistics>.stats-row,.bg-logistics>.info-grid,.bg-logistics>.cta-banner,.bg-logistics>.compare-table,.bg-logistics>.cat-grid,.bg-logistics>div[class],
+.bg-document>.section-inner,.bg-document>h2,.bg-document>.content-grid,.bg-document>.stats-row,.bg-document>.info-grid,.bg-document>.cta-banner,.bg-document>.compare-table,.bg-document>.cat-grid,.bg-document>div[class],
+.bg-global>.section-inner,.bg-global>h2,.bg-global>.content-grid,.bg-global>.stats-row,.bg-global>.info-grid,.bg-global>.cta-banner,.bg-global>.compare-table,.bg-global>.cat-grid,.bg-global>div[class],
+.bg-network>.section-inner,.bg-network>h2,.bg-network>.content-grid,.bg-network>.stats-row,.bg-network>.info-grid,.bg-network>.cta-banner,.bg-network>.compare-table,.bg-network>.cat-grid,.bg-network>div[class]
+{position:relative;z-index:1}
+
 </style>
 </head>
 <body>
@@ -183,8 +234,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- Livingston Customs Partnership -->
-<section class="section content-block" style="padding:3rem 2rem">
-  <div class="section-inner">
+<section class="bg-document section content-block""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">合作报关行</div>
     <h2 class="section-title section-reveal">Livingston International<span style="color:var(--gold)">北美第一报关行</span></h2>
     <p style="font-size:1.05rem;color:var(--text-secondary);line-height:1.8;margin-bottom:2rem" class="section-reveal">乾翔在美国的合作报关行为北美排名第一的报关与合规服务公司 Livingston International —— 总部芝加哥，2900+ 员工，30,000+ 客户，覆盖北美 100+ 关键口岸。</p>
@@ -211,8 +262,8 @@ body:hover #mouseGlow{opacity:1}
 
 <!-- Livingston moved to after Hero -->
 
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-document section content-block-alt""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">海关文件全流程</div>
     <h2 class="section-title section-reveal">专业文件处理，<span style="color:var(--gold)">零差错通关</span></h2>
     <p class="section-desc section-reveal">清关文件的准确性和完整性直接决定通关效率。乾翔专业团队确保每份文件合规无误。</p>
@@ -248,13 +299,13 @@ body:hover #mouseGlow{opacity:1}
 <!-- CI/PL checklist removed per v12 requirements -->
 
 <!-- 3-Stage Customs Planning -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-document section content-block-alt""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">关务筹划</div>
     <h2 class="section-title section-reveal">关务筹划资料<span style="color:var(--gold)">三阶段流程</span></h2>
     <p class="section-desc section-reveal">从初步咨询到正式报价，标准化三阶段流程确保报价准确、合规高效。</p>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem">
-      <div class="info-card section-reveal section-reveal-delay-1">
+      <div class="info-card card-glow section-reveal section-reveal-delay-1">
         <h4>第一阶段：初步咨询资料</h4>
         <p style="margin-bottom:0.5rem"><strong style="color:var(--gold)">⚠️ 仅用于初步估价参考</strong></p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:0.4rem;font-size:0.9rem;color:var(--text-secondary)">
@@ -267,7 +318,7 @@ body:hover #mouseGlow{opacity:1}
         </ul>
         <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem">基于HTS编码和有限信息评估，结果存在不确定性</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-2">
+      <div class="info-card card-glow section-reveal section-reveal-delay-2">
         <h4>第二阶段：过往订单资料</h4>
         <p style="margin-bottom:0.5rem"><strong style="color:var(--gold)">✓ 可提供准确估价</strong></p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:0.4rem;font-size:0.9rem;color:var(--text-secondary)">
@@ -278,7 +329,7 @@ body:hover #mouseGlow{opacity:1}
         </ul>
         <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem">请附带商业发票和装箱单发送给客户经理</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-3">
+      <div class="info-card card-glow section-reveal section-reveal-delay-3">
         <h4>第三阶段：当前订单资料</h4>
         <p style="margin-bottom:0.5rem"><strong style="color:var(--gold)">✓ 可验证发货</strong></p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:0.4rem;font-size:0.9rem;color:var(--text-secondary)">
@@ -292,9 +343,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">清关流程</div>
     <h2 class="section-title section-reveal">六步可视化<span style="color:var(--gold)">清关流程</span></h2>
     <p class="section-desc section-reveal">标准化清关操作，每一步都透明可控，确保货物高效通关。</p>
@@ -349,9 +400,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block-alt">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block-alt""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">清关时效</div>
     <h2 class="section-title section-reveal">高效通关，<span style="color:var(--gold)">时效保障</span></h2>
     <p class="section-desc section-reveal">不同清关模式满足不同需求，确保货物按时送达。</p>
@@ -374,9 +425,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">口岸覆盖</div>
     <h2 class="section-title section-reveal">覆盖中美主要港口<span style="color:var(--gold)">50+口岸</span></h2>
     <p class="section-desc section-reveal">广泛的口岸网络确保货物从任何中国港口出发，都能高效送达美国目的地。</p>
@@ -424,9 +475,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block-alt">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block-alt""
+  <div class="bg-document section-inner">
     <div class="stats-row">
       <div class="stat-item section-reveal section-reveal-delay-1">
         <div class="stat-value">100+</div>
@@ -449,8 +500,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- v7: Real Shipment Tracking Dashboard -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-document section content-block-alt""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">真实在途订单追踪</div>
     <h2 class="section-title section-reveal">在途货物<span style="color:var(--gold)">实时追踪看板</span></h2>
     <p class="section-desc section-reveal">以下为真实在途订单数据，覆盖芝加哥、洛杉矶、圣路易斯等主要港口。</p>
@@ -516,8 +567,8 @@ body:hover #mouseGlow{opacity:1}
 <!-- Livingston moved to after Hero -->
 
 <!-- 文件提交截止时间表 -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-document section content-block-alt""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">文件提交截止时间</div>
     <h2 class="section-title section-reveal">关键文件<span style="color:var(--gold)">提交时间表</span></h2>
     <p class="section-desc section-reveal">确保在规定时间节点前提交完整文件，避免延误清关和产生额外费用。</p>
@@ -543,9 +594,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block-alt">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block-alt""
+  <div class="bg-document section-inner">
     <div class="cta-banner section-reveal">
       <h3>需要专业清关服务？</h3>
       <p>乾翔关务为您提供中国到美国专业清关服务，确保货物准时合规通关。</p>

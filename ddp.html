@@ -156,6 +156,57 @@ body:hover #mouseGlow{opacity:1}
 
 
 *{-webkit-tap-highlight-color:transparent}a,button,input,select,textarea,.nav-toggle,.cta-btn,.form-submit,.nav-mobile-menu a{touch-action:manipulation}
+
+
+
+
+
+
+
+/* === 内容区可视背景 === */
+.bg-finance{position:relative;background:linear-gradient(135deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-finance::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(45deg,rgba(200,150,62,0.4) 0,rgba(200,150,62,0.4) 1px,transparent 1px,transparent 40px),
+  radial-gradient(circle at 30% 40%,rgba(0,180,216,0.25) 0,transparent 50%),
+  radial-gradient(circle at 70% 60%,rgba(200,150,62,0.2) 0,transparent 40%)}
+
+.bg-logistics{position:relative;background:linear-gradient(160deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-logistics::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 60% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 25% 70%,rgba(180,140,70,0.2) 0,transparent 40%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.35) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,50px 50px;
+  background-position:0 0,0 0,25px 25px}
+
+.bg-document{position:relative;background:linear-gradient(145deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-document::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent 0,transparent 58px,rgba(200,150,62,0.18) 58px,rgba(200,150,62,0.18) 59px),
+  radial-gradient(ellipse at 70% 30%,rgba(200,160,80,0.3) 0,transparent 60%),
+  radial-gradient(ellipse at 25% 65%,rgba(0,180,216,0.2) 0,transparent 50%)}
+
+.bg-global{position:relative;background:linear-gradient(130deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-global::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 30% 30%,rgba(0,180,216,0.25) 0,transparent 55%),
+  radial-gradient(circle at 70% 70%,rgba(200,150,62,0.22) 0,transparent 50%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.25) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,60px 60px;
+  background-position:0 0,0 0,30px 30px}
+
+.bg-network{position:relative;background:linear-gradient(120deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-network::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 40% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 70% 60%,rgba(0,180,216,0.2) 0,transparent 50%),
+  radial-gradient(circle 4px,rgba(200,150,62,0.3) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,80px 80px;
+  background-position:0 0,0 0,20px 20px}
+
+.bg-finance>.section-inner,.bg-finance>h2,.bg-finance>.content-grid,.bg-finance>.stats-row,.bg-finance>.info-grid,.bg-finance>.cta-banner,.bg-finance>.compare-table,.bg-finance>.cat-grid,.bg-finance>div[class],
+.bg-logistics>.section-inner,.bg-logistics>h2,.bg-logistics>.content-grid,.bg-logistics>.stats-row,.bg-logistics>.info-grid,.bg-logistics>.cta-banner,.bg-logistics>.compare-table,.bg-logistics>.cat-grid,.bg-logistics>div[class],
+.bg-document>.section-inner,.bg-document>h2,.bg-document>.content-grid,.bg-document>.stats-row,.bg-document>.info-grid,.bg-document>.cta-banner,.bg-document>.compare-table,.bg-document>.cat-grid,.bg-document>div[class],
+.bg-global>.section-inner,.bg-global>h2,.bg-global>.content-grid,.bg-global>.stats-row,.bg-global>.info-grid,.bg-global>.cta-banner,.bg-global>.compare-table,.bg-global>.cat-grid,.bg-global>div[class],
+.bg-network>.section-inner,.bg-network>h2,.bg-network>.content-grid,.bg-network>.stats-row,.bg-network>.info-grid,.bg-network>.cta-banner,.bg-network>.compare-table,.bg-network>.cat-grid,.bg-network>div[class]
+{position:relative;z-index:1}
+
 </style>
 </head>
 <body>
@@ -194,9 +245,9 @@ body:hover #mouseGlow{opacity:1}
     <p class="page-hero-subtitle">从中国工厂到美国客户门口，全程含税含运费，客户零操心</p>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-logistics section content-block""
+  <div class="bg-logistics section-inner">
     <div class="content-grid">
       <div class="content-text section-reveal">
         <div class="section-label">什么是DDP</div>
@@ -211,11 +262,11 @@ body:hover #mouseGlow{opacity:1}
         </ul>
       </div>
       <div class="section-reveal section-reveal-delay-2">
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>DDP vs 其他贸易术语</h4>
           <p>相比FOB、CIF等术语，DDP将所有进口风险和成本转移给卖方，买方只需等待收货。这对美国中小买家尤其有吸引力。</p>
         </div>
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>适用场景</h4>
           <p>跨境电商B2C、中小批量B2B贸易、新品试销、美国中小零售商直采等场景，DDP是最佳选择。</p>
         </div>
@@ -223,9 +274,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block-alt">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-logistics section content-block-alt""
+  <div class="bg-logistics section-inner">
     <div class="section-label section-reveal">流程对比</div>
     <h2 class="section-title section-reveal">传统模式 vs DDP模式</h2>
     <p class="section-desc section-reveal">直观对比两种模式的差异，了解DDP如何简化您的跨境贸易流程。</p>
@@ -246,9 +297,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-logistics section content-block""
+  <div class="bg-logistics section-inner">
     <div class="section-label section-reveal">乾翔DDP流程</div>
     <h2 class="section-title section-reveal">从工厂到门口，<span style="color:var(--gold)">全链路可控</span></h2>
     <p class="section-desc section-reveal">标准化DDP操作流程，确保每票货物准时、合规、低成本交付。</p>
@@ -295,9 +346,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block-alt">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-logistics section content-block-alt""
+  <div class="bg-logistics section-inner">
     <div class="section-label section-reveal">乾翔DDP优势</div>
     <h2 class="section-title section-reveal">为什么选择<span style="color:var(--gold)">乾翔DDP</span></h2>
     <p class="section-desc section-reveal">作为纯美资 SDVOSB 企业，乾翔拥有天然的跨境DDP服务优势。</p>
@@ -322,8 +373,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- LE Framework SOP -->
-<section class="section content-block">
-  <div class="section-inner">
+<section class="bg-logistics section content-block""
+  <div class="bg-logistics section-inner">
     <div class="section-label section-reveal">LE Framework SOP</div>
     <h2 class="section-title section-reveal">全球进口与关税减免<span style="color:var(--gold)">标准操作流程</span></h2>
     <p class="section-desc section-reveal">FY2026 LE Framework Operations Manual，明确商品从各国进口至美国的完整操作流程。</p>
@@ -372,30 +423,23 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- Warehousing Highlights -->
-<section class="section content-block-alt">
-  <div class="section-inner">
-    <div class="section-label section-reveal">仓储管理</div>
-    <h2 class="section-title section-reveal">美国仓储<span style="color:var(--gold)">12万平米</span></h2>
-    <p class="section-desc section-reveal">仓库位于美国密苏里州斯普林菲尔德市，全美还有12个中转仓。</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem">
-      <div class="info-card section-reveal section-reveal-delay-1">
-        <h4>数字化管理系统</h4>
-        <p>所有入仓货物录入数字化管理系统，为合作方提供实时库存监控端口。服务团队配合专业管理软件及智能化设备提供高效科学的仓储、分拣及包装服务。</p>
-      </div>
-      <div class="info-card section-reveal section-reveal-delay-2">
+<section class="bg-logistics section content-block-alt""
+  <div class="bg-logistics section-inner">
+    
+      <div class="info-card card-glow section-reveal section-reveal-delay-2">
         <h4>实时库存监控</h4>
         <p>扩展面积达12万平方米，包含常温、恒温和冷藏仓，满足不同商品的储存需求。全美12个中转仓网络，支持灵活的库存调配。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-3">
+      <div class="info-card card-glow section-reveal section-reveal-delay-3">
         <h4>质量管控</h4>
         <p>三项核心质控：包装完整性检查、订单准确性核验、合规单据审核。确保每票货物从入库到出库全程品质可控。</p>
       </div>
     </div>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-logistics section content-block""
+  <div class="bg-logistics section-inner">
     <div class="section-label section-reveal">客户零操心</div>
     <h2 class="section-title section-reveal">您只需<span style="color:var(--gold)">等待收货</span></h2>
     <div class="stats-row">
@@ -416,8 +460,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- 板块4: DDP全流程时间线 -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-logistics section content-block-alt""
+  <div class="bg-logistics section-inner">
     <div class="section-label section-reveal">DDP全流程时间线</div>
     <h2 class="section-title section-reveal">从工厂提货到客户签收<span style="color:var(--gold)">全链路可视化</span></h2>
     <p class="section-desc section-reveal">标准DDP全流程时间线，每一步清晰可控，让您实时掌握货物动态。</p>
@@ -451,25 +495,25 @@ body:hover #mouseGlow{opacity:1}
 
 
 <!-- 板块5: DDP适用场景 -->
-<section class="section content-block">
-  <div class="section-inner">
+<section class="bg-logistics section content-block""
+  <div class="bg-logistics section-inner">
     <div class="section-label section-reveal">DDP适用场景</div>
     <h2 class="section-title section-reveal">四大场景<span style="color:var(--gold)">精准匹配</span></h2>
     <p class="section-desc section-reveal">DDP完税后交货服务，特别适合以下四类客户群体。</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem">
-      <div class="info-card section-reveal section-reveal-delay-1">
+      <div class="info-card card-glow section-reveal section-reveal-delay-1">
         <h4>想省心的出口商</h4>
         <p>国内工厂或贸易商希望一站式搞定出口报关、国际运输、美国清关等全部环节。传统模式下需要分别对接报关行、货代、清关行，沟通成本高、出错概率大。选择DDP，一个对接窗口解决全部问题，工厂只需备货发货。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-2">
+      <div class="info-card card-glow section-reveal section-reveal-delay-2">
         <h4>没有美国公司的工厂</h4>
         <p>中国工厂直接向美国客户出货，但在美国没有注册公司、没有IOR资质、不了解美国海关法规。使用乾翔DDP服务，无需在美国成立公司即可合法进口。乾翔作为IOR承担全部进口法律责任，工厂零合规风险。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-3">
+      <div class="info-card card-glow section-reveal section-reveal-delay-3">
         <h4>亚马逊FBA卖家</h4>
         <p>跨境电商卖家需要将货物发往亚马逊FBA仓库，但对美国清关流程不熟悉。乾翔DDP服务可直接将货物清关后送至FBA仓库，省去中间环节。同时通过关税优化帮卖家降低入库成本，提升利润率。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-4">
+      <div class="info-card card-glow section-reveal section-reveal-delay-4">
         <h4>需要价格透明化的客户</h4>
         <p>传统FOB/CIF模式下，买方需自行承担进口关税、清关费、内陆运费等多项不确定成本。选择DDP，一口价包含全部费用，客户报价即可成交。价格透明、成本可控，特别适合预算管理严格的采购团队。</p>
       </div>
@@ -478,8 +522,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- 板块6: DDP费用构成 -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-logistics section content-block-alt""
+  <div class="bg-logistics section-inner">
     <div class="section-label section-reveal">DDP费用构成</div>
     <h2 class="section-title section-reveal">一口价包含<span style="color:var(--gold)">全部费用</span></h2>
     <p class="section-desc section-reveal">乾翔DDP报价打包以下全部费用，客户无需支付任何额外费用。</p>
@@ -506,9 +550,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-logistics section content-block""
+  <div class="bg-logistics section-inner">
     <div class="cta-banner section-reveal">
       <h3>想让客户零操心收货？</h3>
       <p>了解乾翔DDP服务如何简化您的中美跨境贸易流程。</p>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IOR备案 - 乾翔关务</title>
-<meta name="description" content="乾翔关务提供Importer of Record合规备案服务，帮助企业规避美国进口合规风险。">
+<meta name="description" content="乾翔关务联合美资股东方 LE 提供Importer of Record合规备案服务，帮助企业规避美国进口合规风险。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -134,6 +134,57 @@ body:hover #mouseGlow{opacity:1}
 
 
 *{-webkit-tap-highlight-color:transparent}a,button,input,select,textarea,.nav-toggle,.cta-btn,.form-submit,.nav-mobile-menu a{touch-action:manipulation}
+
+
+
+
+
+
+
+/* === 内容区可视背景 === */
+.bg-finance{position:relative;background:linear-gradient(135deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-finance::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(45deg,rgba(200,150,62,0.4) 0,rgba(200,150,62,0.4) 1px,transparent 1px,transparent 40px),
+  radial-gradient(circle at 30% 40%,rgba(0,180,216,0.25) 0,transparent 50%),
+  radial-gradient(circle at 70% 60%,rgba(200,150,62,0.2) 0,transparent 40%)}
+
+.bg-logistics{position:relative;background:linear-gradient(160deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-logistics::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 60% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 25% 70%,rgba(180,140,70,0.2) 0,transparent 40%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.35) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,50px 50px;
+  background-position:0 0,0 0,25px 25px}
+
+.bg-document{position:relative;background:linear-gradient(145deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-document::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent 0,transparent 58px,rgba(200,150,62,0.18) 58px,rgba(200,150,62,0.18) 59px),
+  radial-gradient(ellipse at 70% 30%,rgba(200,160,80,0.3) 0,transparent 60%),
+  radial-gradient(ellipse at 25% 65%,rgba(0,180,216,0.2) 0,transparent 50%)}
+
+.bg-global{position:relative;background:linear-gradient(130deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-global::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 30% 30%,rgba(0,180,216,0.25) 0,transparent 55%),
+  radial-gradient(circle at 70% 70%,rgba(200,150,62,0.22) 0,transparent 50%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.25) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,60px 60px;
+  background-position:0 0,0 0,30px 30px}
+
+.bg-network{position:relative;background:linear-gradient(120deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-network::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 40% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 70% 60%,rgba(0,180,216,0.2) 0,transparent 50%),
+  radial-gradient(circle 4px,rgba(200,150,62,0.3) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,80px 80px;
+  background-position:0 0,0 0,20px 20px}
+
+.bg-finance>.section-inner,.bg-finance>h2,.bg-finance>.content-grid,.bg-finance>.stats-row,.bg-finance>.info-grid,.bg-finance>.cta-banner,.bg-finance>.compare-table,.bg-finance>.cat-grid,.bg-finance>div[class],
+.bg-logistics>.section-inner,.bg-logistics>h2,.bg-logistics>.content-grid,.bg-logistics>.stats-row,.bg-logistics>.info-grid,.bg-logistics>.cta-banner,.bg-logistics>.compare-table,.bg-logistics>.cat-grid,.bg-logistics>div[class],
+.bg-document>.section-inner,.bg-document>h2,.bg-document>.content-grid,.bg-document>.stats-row,.bg-document>.info-grid,.bg-document>.cta-banner,.bg-document>.compare-table,.bg-document>.cat-grid,.bg-document>div[class],
+.bg-global>.section-inner,.bg-global>h2,.bg-global>.content-grid,.bg-global>.stats-row,.bg-global>.info-grid,.bg-global>.cta-banner,.bg-global>.compare-table,.bg-global>.cat-grid,.bg-global>div[class],
+.bg-network>.section-inner,.bg-network>h2,.bg-network>.content-grid,.bg-network>.stats-row,.bg-network>.info-grid,.bg-network>.cta-banner,.bg-network>.compare-table,.bg-network>.cat-grid,.bg-network>div[class]
+{position:relative;z-index:1}
+
 </style>
 </head>
 <body>
@@ -172,9 +223,9 @@ body:hover #mouseGlow{opacity:1}
     <p class="page-hero-subtitle">Importer of Record 合规备案 / 风险规避 / 资质展示</p>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block""
+  <div class="bg-document section-inner">
     <div class="content-grid">
       <div class="content-text section-reveal">
         <div class="section-label">什么是IOR</div>
@@ -189,51 +240,51 @@ body:hover #mouseGlow{opacity:1}
         </ul>
       </div>
       <div class="section-reveal section-reveal-delay-2">
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>为什么需要IOR</h4>
           <p>美国海关规定，所有进口货物必须由注册IOR进行申报。IOR承担进口合规的法律责任，包括关税缴纳、商品合规、标签要求等。</p>
         </div>
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>乾翔IOR服务</h4>
-          <p>作为纯美资 SDVOSB 企业，乾翔具备完整的IOR备案资质，可为企业提供合规的IOR代理服务，确保进口流程合法合规。</p>
+          <p>乾翔联合纯美资 SDVOSB 股东方 LE，依托其完整的IOR备案资质，为企业提供合规的IOR代理服务，确保进口流程合法合规。</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<section class="section content-block-alt">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block-alt""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">乾翔IOR方案</div>
     <h2 class="section-title section-reveal">专业IOR服务，<span style="color:var(--gold)">合规无忧</span></h2>
-    <p class="section-desc section-reveal">作为纯美资 SDVOSB 企业，乾翔具备完整的IOR备案资质，覆盖多品类进口需求。基于美国合作方的特殊许可证，我们还可合法降低关税成本。</p>
+    <p class="section-desc section-reveal">乾翔联合纯美资 SDVOSB 股东方 LE，依托其完整的IOR备案资质，覆盖多品类进口需求。基于美方合作方的特殊许可证，可合法降低关税成本。</p>
     <div class="content-grid">
       <div class="section-reveal">
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>美国注册进口商资质</h4>
-          <p>乾翔在美国合法注册为进口商（Importer of Record），拥有完整的进口税号（EIN）和海关编码。所有进口货物以乾翔名义进行海关申报，确保100%合规。企业无需自行申请IOR资质，即可合法开展对美贸易。</p>
+          <p>乾翔的股东方 LE 在美国合法注册为真实进口商（Importer of Record），拥有完整的进口税号（EIN）和海关编码。所有进口货物以该美资实体名义进行海关申报，确保100%合规。企业无需自行申请IOR资质，即可合法开展对美贸易。</p>
         </div>
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>多品类覆盖能力</h4>
-          <p>乾翔IOR服务覆盖美国主要进口品类：电子产品（FCC认证）、食品饮料（FDA注册）、农产品（USDA检验）、医疗器械（FDA 510(k)）、化妆品（FDA设施注册）、纺织品（CPSC合规）。每个品类都有专业团队把关合规要求。</p>
+          <p>乾翔的美资股东方 IOR 服务，涵盖美国主要进口品类：电子产品（FCC认证）、食品饮料（FDA注册）、农产品（USDA检验）、医疗器械（FDA 510(k)）、化妆品（FDA设施注册）、纺织品（CPSC合规）。每个品类都有专业团队把关合规要求。</p>
         </div>
       </div>
       <div class="section-reveal section-reveal-delay-2">
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>FDA合规服务</h4>
-          <p>食品、药品、医疗器械、化妆品等FDA监管品类，乾翔提供完整的FDA合规服务：工厂注册、产品列名、标签审核、FSVP供应商验证、 prior notice进口前通知。确保货物顺利通过FDA查验。</p>
+          <p>食品、药品、医疗器械、化妆品等FDA监管品类，乾翔联合美资股东方的合规团队提供完整的FDA服务：工厂注册、产品列名、标签审核、FSVP供应商验证、 prior notice进口前通知。确保货物顺利通过FDA查验。</p>
         </div>
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>USDA合规服务</h4>
-          <p>农产品、肉类、乳制品等USDA监管品类，乾翔协助办理进口许可证、动植物检疫证书、USDA入境检验等手续。与USDA检验检疫部门保持良好沟通，确保合规高效通关。</p>
+          <p>农产品、肉类、乳制品等USDA监管品类，乾翔联合美资股东方协助办理进口许可证、动植物检疫证书、USDA入境检验等手续。与USDA检验检疫部门保持良好沟通，确保合规高效通关。</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">风险规避</div>
     <h2 class="section-title section-reveal">不合规IOR的<span style="color:var(--gold)">三大风险</span></h2>
     <p class="section-desc section-reveal">使用不合规的IOR或没有IOR资质，可能面临严重的法律和经济后果。</p>
@@ -256,38 +307,39 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">资质展示</div>
-    <h2 class="section-title section-reveal">乾翔<span style="color:var(--gold)">七大合规资质</span></h2>
+    <h2 class="section-title section-reveal">股东方<span style="color:var(--gold)">七大合规资质</span></h2>
+    <p class="section-desc section-reveal">以下资质均归属于乾翔的美资股东方 LE LLC（纯美资 SDVOSB 企业），乾翔作为中国运营方联合使用。</p>
     <p class="section-desc section-reveal">行业最健全的运营资质体系，依托美国服务公司持有的联邦级特殊许可证与授权。</p>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem">
-      <div class="cert-card section-reveal section-reveal-delay-1">
+      <div class="cert-card card-glow section-reveal section-reveal-delay-1">
         <h4>🛡️ SDVOSB 伤残退伍军人所有企业认证</h4>
         <p>依据FAR Part 19.14，参与SDVOSB专属政府采购合同，享受联邦采购关税减免与快速海关处理。2018年正式生效，祖父条款保护，不再接受新申请。</p>
       </div>
-      <div class="cert-card section-reveal section-reveal-delay-2">
+      <div class="cert-card card-glow section-reveal section-reveal-delay-2">
         <h4>🛃 CBP 海关和边境保护局进口商许可</h4>
-        <p>海关优惠关税与清关特权。所有货物依托本公司牌照完成清关申报，按优惠税率完成清关。IOR合规审查升级背景下，CBP对进口商记录真实性与合规性审查更趋严格。</p>
+        <p>海关优惠关税与清关特权。所有货物依托股东方牌照完成清关申报，按优惠税率完成清关。IOR合规审查升级背景下，CBP对进口商记录真实性与合规性审查更趋严格。</p>
       </div>
-      <div class="cert-card section-reveal section-reveal-delay-3">
+      <div class="cert-card card-glow section-reveal section-reveal-delay-3">
         <h4>🚛 DOT 运输部注册</h4>
         <p>运输部注册资质，货运代理和物流授权，确保国际物流运输全链路合规。</p>
       </div>
-      <div class="cert-card section-reveal section-reveal-delay-4">
+      <div class="cert-card card-glow section-reveal section-reveal-delay-4">
         <h4>🔒 BIS 商务部工业与安全局出口许可</h4>
         <p>管制商品出口许可，覆盖军民两用物品。美国国务院跨部门许可证监管职能涵盖BIS出口管制要求。</p>
       </div>
-      <div class="cert-card section-reveal section-reveal-delay-1">
+      <div class="cert-card card-glow section-reveal section-reveal-delay-1">
         <h4>⚡ DOE 能源部授权</h4>
         <p>能源部授权覆盖能源和科技类运输商品的进口合规。</p>
       </div>
-      <div class="cert-card section-reveal section-reveal-delay-2">
+      <div class="cert-card card-glow section-reveal section-reveal-delay-2">
         <h4>🌐 ITA 国际贸易管理局合规企业</h4>
         <p>可享受《贸易协定法》（TAA）优惠关税率，以及USMCA、GSP等协定优惠。2020年裁定获得祖父条款保护。</p>
       </div>
-      <div class="cert-card section-reveal section-reveal-delay-3" style="grid-column:span 2">
+      <div class="cert-card card-glow section-reveal section-reveal-delay-3" style="grid-column:span 2">
         <h4>🏛️ SAM.GOV 政府联邦平台名单企业</h4>
         <p>美国联邦采购法案官方网站SAM.GOV可查询到公司资质、备案经营品类及特殊许可资质。确保所有授权可查证、可追溯。密苏里州商业许可-良好运营存续认证。</p>
       </div>
@@ -296,8 +348,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- IOR Compliance Risks -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-document section content-block-alt""
+  <div class="bg-document section-inner">
     <div class="section-label section-reveal">IOR合规风险</div>
     <h2 class="section-title section-reveal">IOR资质合规审查<span style="color:var(--gold)">升级要点</span></h2>
     <p class="section-desc section-reveal">CBP对进口商记录(IOR)的真实性与合规性审查更趋严格，2024年至今美国已实施21次系统性政策调整。</p>
@@ -314,11 +366,11 @@ body:hover #mouseGlow{opacity:1}
         </ul>
       </div>
       <div class="section-reveal section-reveal-delay-2">
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>合规保障措施</h4>
           <p>乾翔采用的运营程序包含公认的合规保障：使用美国海关授权经纪人进行报关申报、保存必要的商业文件资料、严格遵循美国法律规定的海关估价层级体系和文件规范。与国际贸易及物流行业普遍采用的实践标准完全一致。</p>
         </div>
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>法律意见书背书</h4>
           <p>华盛顿特区精品律所Mark Barnes & Associates审查确认：乾翔运营程序、关税估价方法及「关税工程」做法完全符合CBP监管框架。配合持牌报关行与完善的文件存档体系，整体合规架构满足美国海关法律的严格要求。</p>
         </div>
@@ -326,13 +378,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-
-
-
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-document section content-block""
+  <div class="bg-document section-inner">
     <div class="cta-banner section-reveal">
       <h3>需要IOR备案服务？</h3>
       <p>咨询乾翔关务，获取合规IOR备案方案，确保进口流程合法无忧。</p>
@@ -348,7 +396,7 @@ body:hover #mouseGlow{opacity:1}
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="nav-logo" style="margin-bottom:0.5rem"><img src="logo.png" alt="乾翔衍庆" style="height:32px"><span style="font-weight:700;font-size:1rem">乾翔衍庆</span></a>
-        <p>四川乾翔衍庆物流科技有限公司，中美合资企业，美方 Limitless Evolution LLC 为纯美资 SDVOSB 股东方。专注于中美跨境贸易的关税减免、DDP贸易、IOR备案与专业清关服务，助力企业降本增效。</p>
+        <p>四川乾翔衍庆物流科技有限公司，中美合资企业，美方 LE LLC 为纯美资 SDVOSB 股东方。专注于中美跨境贸易的关税减免、DDP贸易、IOR备案与专业清关服务，助力企业降本增效。</p>
       </div>
       <div><h4>服务</h4><ul><li><a href="tariff.html">中美关税减免</a></li><li><a href="ddp.html">DDP贸易</a></li><li><a href="ior.html">合规IOR备案</a></li><li><a href="customs.html">一站式清关</a></li><li><a href="partner.html">渠道合作</a></li></ul></div>
       <div><h4>关于</h4><ul><li><a href="index.html">公司简介</a></li><li><a href="tariff.html">关税优化</a></li><li><a href="ddp.html">DDP贸易</a></li><li><a href="partner.html">渠道合作</a></li><li><a href="contact.html">联系我们</a></li></ul></div>
@@ -361,7 +409,7 @@ body:hover #mouseGlow{opacity:1}
     </div>
     <div class="footer-bottom">
       <span>&copy; 2025 四川乾翔衍庆物流科技有限公司 QianXiang YanQing Logistics Technology Co., Ltd. All rights reserved.</span>
-      <span>中美合资 — 美方 SDVOSB 股东方 Limitless Evolution · 专业的事，交给乾翔</span>
+      <span>中美合资 — 美方 SDVOSB 股东方 LE · 专业的事，交给乾翔</span>
     </div>
   </div>
 </footer>

@@ -145,10 +145,10 @@ body:hover #mouseGlow{opacity:1}
 .compare-table tbody tr:hover{background:rgba(200,150,62,0.06)}
 
 
-.bg-pattern{position:relative}
-.bg-pattern::before{content:'';position:absolute;inset:0;background:url(images/tariff_hero.svg') center/cover no-repeat;opacity:0.06;z-index:0;pointer-events:none}
-.bg-pattern .section-inner{position:relative;z-index:1}
-.bg-gradient{background:linear-gradient(180deg,rgba(200,150,62,0.04) 0%,transparent 50%,rgba(200,150,62,0.04) 100%)}
+
+
+
+
 
 
 .cat-card{position:relative;overflow:hidden}
@@ -161,6 +161,57 @@ body:hover #mouseGlow{opacity:1}
 .cat-mach::before{background-image:url(images/mach_bg.svg)}
 .cat-food::before{background-image:url(images/food_bg.svg)}
 *{-webkit-tap-highlight-color:transparent}a,button,input,select,textarea,.nav-toggle,.cta-btn,.form-submit,.nav-mobile-menu a{touch-action:manipulation}
+
+
+
+
+
+
+
+/* === 内容区可视背景 === */
+.bg-finance{position:relative;background:linear-gradient(135deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-finance::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(45deg,rgba(200,150,62,0.4) 0,rgba(200,150,62,0.4) 1px,transparent 1px,transparent 40px),
+  radial-gradient(circle at 30% 40%,rgba(0,180,216,0.25) 0,transparent 50%),
+  radial-gradient(circle at 70% 60%,rgba(200,150,62,0.2) 0,transparent 40%)}
+
+.bg-logistics{position:relative;background:linear-gradient(160deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-logistics::before{content:'';position:absolute;inset:0;opacity:0.3;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 60% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 25% 70%,rgba(180,140,70,0.2) 0,transparent 40%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.35) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,50px 50px;
+  background-position:0 0,0 0,25px 25px}
+
+.bg-document{position:relative;background:linear-gradient(145deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-document::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent 0,transparent 58px,rgba(200,150,62,0.18) 58px,rgba(200,150,62,0.18) 59px),
+  radial-gradient(ellipse at 70% 30%,rgba(200,160,80,0.3) 0,transparent 60%),
+  radial-gradient(ellipse at 25% 65%,rgba(0,180,216,0.2) 0,transparent 50%)}
+
+.bg-global{position:relative;background:linear-gradient(130deg,#0a1628 0%,#0d2b4e 50%,#0a2840 100%)}
+.bg-global::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 30% 30%,rgba(0,180,216,0.25) 0,transparent 55%),
+  radial-gradient(circle at 70% 70%,rgba(200,150,62,0.22) 0,transparent 50%),
+  radial-gradient(circle 3px,rgba(200,150,62,0.25) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,60px 60px;
+  background-position:0 0,0 0,30px 30px}
+
+.bg-network{position:relative;background:linear-gradient(120deg,#0a1628 0%,#0d2b5e 50%,#0a2840 100%)}
+.bg-network::before{content:'';position:absolute;inset:0;opacity:0.28;z-index:0;pointer-events:none;
+  background-image:radial-gradient(circle at 40% 30%,rgba(200,150,62,0.3) 0,transparent 55%),
+  radial-gradient(circle at 70% 60%,rgba(0,180,216,0.2) 0,transparent 50%),
+  radial-gradient(circle 4px,rgba(200,150,62,0.3) 50%,transparent 50%);
+  background-size:100% 100%,100% 100%,80px 80px;
+  background-position:0 0,0 0,20px 20px}
+
+.bg-finance>.section-inner,.bg-finance>h2,.bg-finance>.content-grid,.bg-finance>.stats-row,.bg-finance>.info-grid,.bg-finance>.cta-banner,.bg-finance>.compare-table,.bg-finance>.cat-grid,.bg-finance>div[class],
+.bg-logistics>.section-inner,.bg-logistics>h2,.bg-logistics>.content-grid,.bg-logistics>.stats-row,.bg-logistics>.info-grid,.bg-logistics>.cta-banner,.bg-logistics>.compare-table,.bg-logistics>.cat-grid,.bg-logistics>div[class],
+.bg-document>.section-inner,.bg-document>h2,.bg-document>.content-grid,.bg-document>.stats-row,.bg-document>.info-grid,.bg-document>.cta-banner,.bg-document>.compare-table,.bg-document>.cat-grid,.bg-document>div[class],
+.bg-global>.section-inner,.bg-global>h2,.bg-global>.content-grid,.bg-global>.stats-row,.bg-global>.info-grid,.bg-global>.cta-banner,.bg-global>.compare-table,.bg-global>.cat-grid,.bg-global>div[class],
+.bg-network>.section-inner,.bg-network>h2,.bg-network>.content-grid,.bg-network>.stats-row,.bg-network>.info-grid,.bg-network>.cta-banner,.bg-network>.compare-table,.bg-network>.cat-grid,.bg-network>div[class]
+{position:relative;z-index:1}
+
 </style>
 </head>
 <body>
@@ -208,16 +259,14 @@ body:hover #mouseGlow{opacity:1}
     <p class="page-hero-subtitle">依托特殊资质，为您优化关税，让您清关无忧 — HS编码精准匹配 / 关税减免方案定制</p>
   </div>
 </section>
-
-
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-finance section content-block""
+  <div class="bg-finance section-inner">
     <div class="content-grid">
       <div class="content-text section-reveal">
         <div class="section-label">关税优化</div>
         <h3>平均节约关税成本约<span class="highlight">20%</span></h3>
-        <p>依托美国合作方Limitless Evolution的SDVOSB/CBP等特殊许可证以及合法的关税优化策略，我们能够从根本上降低进口关税成本。</p>
+        <p>依托美国合作方LE的SDVOSB/CBP等特殊许可证以及合法的关税优化策略，我们能够从根本上降低进口关税成本。</p>
         <p>通过<span class="highlight">HS编码精准匹配、FTA协定利用、归类策略优化</span>等多维度手段，在合法框架内实现关税成本显著降低。</p>
         <ul class="feature-list">
           <li><span class="icon">&#10003;</span>基于SDVOSB/CBP特殊许可证合法减税</li>
@@ -227,11 +276,11 @@ body:hover #mouseGlow{opacity:1}
         </ul>
       </div>
       <div class="section-reveal section-reveal-delay-2">
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>为什么能省这么多</h4>
-          <p>传统货代依赖查验率博弈或低报货值来压低关税，风险极高且不合规。乾翔依托 Limitless Evolution 的真实美国 SDVOSB/CBP 特殊资质，通过合法归类优化、FTA 协定利用、301条款豁免等正规手段降低关税成本，全程在 ACE 系统合规申报，记录永久可查。</p>
+          <p>传统货代依赖查验率博弈或低报货值来压低关税，风险极高且不合规。乾翔依托 LE 的真实美国 SDVOSB/CBP 特殊资质，通过合法归类优化、FTA 协定利用、301条款豁免等正规手段降低关税成本，全程在 ACE 系统合规申报，记录永久可查。</p>
         </div>
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>合法合规保障</h4>
           <p>所有优化方案均在美国海关ACE系统下合法申报，流程透明可查，记录永久留存。华盛顿特区精品律所Mark Barnes & Associates出具法律意见书背书。</p>
         </div>
@@ -239,9 +288,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block-alt">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-finance section content-block-alt""
+  <div class="bg-finance section-inner">
     <div class="section-label section-reveal">成功案例</div>
     <h2 class="section-title section-reveal">多品类关税优化<span style="color:var(--gold)">真实成果</span></h2>
     <p class="section-desc section-reveal">全程合规申报通过率100%，平均关税节约约20%。</p>
@@ -277,13 +326,13 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- Peptide Product Case Study -->
-<section class="section content-block">
-  <div class="section-inner">
+<section class="bg-finance section content-block""
+  <div class="bg-finance section-inner">
     <div class="section-label section-reveal">案例详解</div>
     <h2 class="section-title section-reveal">肽类产品跨境运输<span style="color:var(--gold)">(2025)</span></h2>
     <div class="content-grid">
       <div class="section-reveal">
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>项目基础信息</h4>
           <ul style="list-style:none;display:flex;flex-direction:column;gap:0.4rem;font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem">
             <li>📦 产品品类：肽类化工产品</li>
@@ -296,7 +345,7 @@ body:hover #mouseGlow{opacity:1}
         </div>
       </div>
       <div class="section-reveal section-reveal-delay-2">
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>合规优化核心成效</h4>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
             <div style="text-align:center;padding:1rem;background:rgba(200,150,62,0.08);border-radius:10px">
@@ -324,8 +373,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- v7: Real Tariff Data -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-finance section content-block-alt""
+  <div class="bg-finance section-inner">
     <h2 class="section-title section-reveal">能源系统配件关税<span style="color:var(--gold)">优化报价</span></h2>
     <p class="section-desc section-reveal">报价签发日期：2026年5月25日，有效期15天。以下为真实数据，乾翔打包关税率已包含全部合规成本。</p>
     <div class="section-reveal section-reveal-delay-1" style="overflow-x:auto">
@@ -376,9 +425,9 @@ body:hover #mouseGlow{opacity:1}
     </div>
   </div>
 </section>
-
-<section class="section content-block">
-  <div class="section-inner">
+<div class="section-divider"></div>
+<section class="bg-finance section content-block""
+  <div class="bg-finance section-inner">
     <div class="cta-banner section-reveal">
       <h3>关税成本居高不下？</h3>
       <p>免费获取关税优化评估报告，了解您的产品可以节省多少关税成本。</p>
@@ -388,8 +437,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- SDVOSB Qualification & Tariff Engineering -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-finance section content-block-alt""
+  <div class="bg-finance section-inner">
     <div class="section-label section-reveal">核心优势</div>
     <h2 class="section-title section-reveal">SDVOSB资质如何<span style="color:var(--gold)">合法降关税</span></h2>
     <p class="section-desc section-reveal">依托美国服务公司持有的联邦级特殊许可证，通过合法合规框架实现关税大幅减免。</p>
@@ -405,11 +454,11 @@ body:hover #mouseGlow{opacity:1}
         </ul>
       </div>
       <div class="section-reveal section-reveal-delay-2">
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>关税工程方法论</h4>
           <p>关税工程基于两大长期原则：商品可按<span class="highlight">进口状态进行分类</span>；进口商有权通过商品设计获取<span class="highlight">最低税率及最优惠待遇</span>。CBP在多项行政裁定中（HQ 965751、HQ H220856）明确：若CBP认定某商品在进口时已构成商业现实，则关税工程合法合规，不会被视为欺诈或人为操作。</p>
         </div>
-        <div class="info-card">
+        <div class="info-card card-glow">
           <h4>祖父条款保护</h4>
           <p>自2018年起SDVOSB授权正式生效。2020年依据国际贸易管理局和美国总务管理局裁定，关税减免资质获得「grandfathered资格」保护。目前此类特定贸易授权已不再接受新申请，使乾翔成为极少数仍具备完整授权的在营企业。</p>
         </div>
@@ -419,37 +468,37 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- 7 Qualifications Value -->
-<section class="section content-block">
-  <div class="section-inner">
+<section class="bg-finance section content-block""
+  <div class="bg-finance section-inner">
     <div class="section-label section-reveal">七大资质</div>
     <h2 class="section-title section-reveal">七大资质对<span style="color:var(--gold)">中国出口企业的实际价值</span></h2>
     <p class="section-desc section-reveal">行业最健全的运营资质体系，覆盖进出口全链路合规需求。</p>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2rem">
-      <div class="info-card section-reveal section-reveal-delay-1">
+      <div class="info-card card-glow section-reveal section-reveal-delay-1">
         <h4>🛡️ SDVOSB 伤残退伍军人所有企业认证</h4>
         <p>依据FAR Part 19.14，参与SDVOSB专属政府采购合同，享受联邦采购关税减免与快速海关处理。2018年生效，祖父条款保护，不再接受新申请。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-2">
+      <div class="info-card card-glow section-reveal section-reveal-delay-2">
         <h4>🛃 CBP 海关和边境保护局进口商许可</h4>
         <p>持有海关进口商许可，享受海关优惠关税与清关特权。所有货物依托本公司牌照完成清关申报，按优惠税率完成清关。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-1">
+      <div class="info-card card-glow section-reveal section-reveal-delay-1">
         <h4>🚛 DOT 运输部注册</h4>
         <p>运输部注册资质，货运代理和物流授权。确保国际物流运输全链路合规运营。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-2">
+      <div class="info-card card-glow section-reveal section-reveal-delay-2">
         <h4>🔒 BIS 商务部工业与安全局出口许可</h4>
         <p>管制商品出口许可，覆盖军民两用物品。该许可涵盖BIS出口管制要求，确保受管控物品合法进出口。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-3">
+      <div class="info-card card-glow section-reveal section-reveal-delay-3">
         <h4>⚡ DOE 能源部授权</h4>
         <p>能源部授权覆盖能源和科技类运输商品的进口合规，享受相关关税减免优惠。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-4">
+      <div class="info-card card-glow section-reveal section-reveal-delay-4">
         <h4>🌐 ITA 国际贸易管理局合规企业</h4>
         <p>国际贸易管理局合规认证，可享受《贸易协定法》（TAA）优惠关税率，以及USMCA、GSP等协定优惠。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-3" style="grid-column:span 2">
+      <div class="info-card card-glow section-reveal section-reveal-delay-3" style="grid-column:span 2">
         <h4>🏛️ SAM.GOV 政府联邦平台名单企业</h4>
         <p>美国联邦采购法案官方网站SAM.GOV可查询到公司资质、备案经营品类及特殊许可资质。确保所有授权可查证、可追溯。</p>
       </div>
@@ -458,8 +507,8 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- 板块4: 真实报价对比 -->
-<section class="section content-block">
-  <div class="section-inner">
+<section class="bg-finance section content-block""
+  <div class="bg-finance section-inner">
     <div class="section-label section-reveal">真实报价对比</div>
     <h2 class="section-title section-reveal">能源系统配件<span style="color:var(--gold)">关税优化对比</span></h2>
     <p class="section-desc section-reveal">以能源系统配件为例，展示乾翔关税优化前后的实际价格差异，数据真实可查。</p>
@@ -512,21 +561,21 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- 板块5: 关税优化原理 -->
-<section class="section content-block-alt">
-  <div class="section-inner">
+<section class="bg-finance section content-block-alt""
+  <div class="bg-finance section-inner">
     <div class="section-label section-reveal">关税优化原理</div>
     <h2 class="section-title section-reveal">深入理解<span style="color:var(--gold)">关税构成与优化逻辑</span></h2>
     <p class="section-desc section-reveal">了解美国进口关税的三大组成部分，才能理解乾翔如何合法拆解并优化每一分关税成本。</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem">
-      <div class="info-card section-reveal section-reveal-delay-1">
+      <div class="info-card card-glow section-reveal section-reveal-delay-1">
         <h4>MFN 最惠国税率</h4>
         <p>Most Favored Nation税率是WTO框架下美国对所有成员国适用的基础关税税率。不同HS编码对应不同MFN税率，通常在0%-10%之间。这是关税优化的第一层基础。乾翔通过精准HS编码分类，确保产品适用最低合法MFN税率。例如双极板MFN税率为3.4%，碳毡为2.5%。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-2">
+      <div class="info-card card-glow section-reveal section-reveal-delay-2">
         <h4>S.301 条款附加税</h4>
         <p>Section 301条款是美国贸易代表办公室(USTR)基于《1974年贸易法》第301条对中国商品征收的额外关税。2025年该条款覆盖范围进一步扩大，核心产品税率高达25%-100%。乾翔通过归类策略、转运方案和FTA协定利用，合法规避或降低S.301附加税的适用范围。</p>
       </div>
-      <div class="info-card section-reveal section-reveal-delay-3">
+      <div class="info-card card-glow section-reveal section-reveal-delay-3">
         <h4>S.122 对等关税</h4>
         <p>Section 122条款是总统基于国家紧急状态权力征收的对等关税(Reciprocal Tariff)，2025年起对中国商品普遍适用10%-50%的附加税率。该条款具有临时性特征，可通过贸易谈判和合规调整降低适用税率。乾翔团队密切跟踪政策变化，为客户争取最优税率窗口期。</p>
       </div>
@@ -560,29 +609,29 @@ body:hover #mouseGlow{opacity:1}
 </section>
 
 <!-- 板块6: 适用产品类型 -->
-<section class="section content-block">
-  <div class="section-inner">
+<section class="bg-finance section content-block""
+  <div class="bg-finance section-inner">
     <div class="section-label section-reveal">适用产品类型</div>
     <h2 class="section-title section-reveal">覆盖五大品类<span style="color:var(--gold)">多行业验证</span></h2>
     <p class="section-desc section-reveal">乾翔关税优化服务已覆盖化工原料、电子产品、新能源、机械配件、食品原料五大核心品类。</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem">
-      <div class="info-card cat-card cat-chem section-reveal section-reveal-delay-1">
+      <div class="info-card card-glow cat-card cat-chem section-reveal section-reveal-delay-1">
           <h4>化工原料</h4>
         <p>肽类化工产品、碳毡、有机化合物等。某客户将肽类产品综合税率从35%降至约28%，单票节省约20%。化工品分类复杂，专业归类可显著降低关税成本。</p>
       </div>
-      <div class="info-card cat-card cat-elec section-reveal section-reveal-delay-2">
+      <div class="info-card card-glow cat-card cat-elec section-reveal section-reveal-delay-2">
           <h4>电子产品</h4>
         <p>B超诊断仪、电池组件、半导体配件等。某客户B超诊断仪关税从75.48%降至约60%，降幅约20%。电子产品通常涉及多层税率叠加，乾翔通过精确归类和协定利用实现大幅优化。</p>
       </div>
-      <div class="info-card cat-card cat-energy section-reveal section-reveal-delay-3">
+      <div class="info-card card-glow cat-card cat-energy section-reveal section-reveal-delay-3">
         <h4>新能源</h4>
         <p>能源系统双极板、储能电池组件、光伏配件等。双极板从38.4%降至约30.7%省约20%，碳毡从35%降至约28%省约20%。新能源产品受益于DOE能源部授权和SDVOSB双重资质优势。</p>
       </div>
-      <div class="info-card cat-card cat-mach section-reveal section-reveal-delay-4">
+      <div class="info-card card-glow cat-card cat-mach section-reveal section-reveal-delay-4">
           <h4>机械配件</h4>
         <p>钢制模块化单元、冷轧板桩、轮胎等。钢制模块化单元从40%降至约32%，降幅约20%。重型机械类产品关税基数高，优化空间最大。</p>
       </div>
-      <div class="info-card cat-card cat-food section-reveal section-reveal-delay-1" style="grid-column:span 2">
+      <div class="info-card card-glow cat-card cat-food section-reveal section-reveal-delay-1" style="grid-column:span 2">
           <h4>食品原料</h4>
         <p>鱼油产品、食品添加剂、营养保健品等。鱼油类产品从37.9%降至约30.3%，降幅约20%。食品类进口需额外满足FDA注册和FSVP供应商验证要求，乾翔提供FDA合规一站式服务。</p>
       </div>
@@ -600,7 +649,7 @@ body:hover #mouseGlow{opacity:1}
           <img src="logo.png" alt="乾翔衍庆" style="height:32px">
           <span style="font-weight:700;font-size:1rem">乾翔衍庆</span>
         </a>
-        <p>四川乾翔衍庆物流科技有限公司，中美合资企业，美方 Limitless Evolution LLC 为纯美资 SDVOSB 股东方。专注于中美跨境贸易的关税减免、DDP贸易、IOR备案与专业清关服务，助力企业降本增效。</p>
+        <p>四川乾翔衍庆物流科技有限公司，中美合资企业，美方 LE LLC 为纯美资 SDVOSB 股东方。专注于中美跨境贸易的关税减免、DDP贸易、IOR备案与专业清关服务，助力企业降本增效。</p>
       </div>
       <div>
         <h4>服务</h4>
@@ -631,7 +680,7 @@ body:hover #mouseGlow{opacity:1}
     </div>
     <div class="footer-bottom">
       <span>&copy; 2025 四川乾翔衍庆物流科技有限公司 QianXiang YanQing Logistics Technology Co., Ltd. All rights reserved.</span>
-      <span>中美合资 — 美方 SDVOSB 股东方 Limitless Evolution · 专业的事，交给乾翔</span>
+      <span>中美合资 — 美方 SDVOSB 股东方 LE · 专业的事，交给乾翔</span>
     </div>
   </div>
 </footer>
