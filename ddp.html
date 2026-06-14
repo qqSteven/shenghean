@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DDP贸易 - 乾翔关务</title>
+<meta name="description" content="乾翔关务DDP完税后交货服务，从中国工厂到美国客户门口，全程含税含运费，客户零操心。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#0D2B5E;--blue-dark:#091D42;--blue-light:#163A75;--white:#FFFFFF;--gold:#C8963E;--gold-light:#D4A94F;--gold-dark:#A87A2E;--text-primary:#F0F0F0;--text-secondary:rgba(255,255,255,0.7);--text-muted:rgba(255,255,255,0.5);--border-glass:rgba(255,255,255,0.1)}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Inter','Geist','SF Pro Display','PingFang SC','Microsoft YaHei',system-ui,sans-serif;background:var(--blue-dark);color:var(--text-primary);line-height:1.7;font-size:16px;overflow-x:hidden}
+img{max-width:100%;display:block}
+
+#mouseGlow{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:9998;background:radial-gradient(circle,rgba(200,150,62,0.20) 0%,rgba(200,150,62,0.08) 30%,rgba(200,150,62,0.02) 55%,transparent 70%);transform:translate(-50%,-50%);transition:opacity 0.3s;opacity:0;will-change:left,top;filter:blur(2px)}
+body:hover #mouseGlow{opacity:1}
+#hexGrid{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.06;transition:transform 0.1s linear}
+.hex-shape{position:absolute;border:1px solid var(--gold);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexFloat 20s infinite ease-in-out}
+@keyframes hexFloat{0%,100%{transform:translateY(0) rotate(0deg);opacity:0.3}50%{transform:translateY(-20px) rotate(30deg);opacity:0.6}}
+
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:9999;width:0;will-change:width}
+.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1rem 2rem;background:rgba(9,29,66,0.3);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);border-bottom:1px solid transparent;transition:all 0.5s cubic-bezier(0.16,1,0.3,1)}
+.nav.scrolled{background:rgba(9,29,66,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(200,150,62,0.4);box-shadow:0 4px 30px rgba(0,0,0,0.25),0 1px 0 rgba(200,150,62,0.2)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:var(--white)}
+.nav-logo img{height:40px;width:auto;filter:drop-shadow(0 0 8px rgba(200,150,62,0.6))}
+.nav-logo span{font-weight:700;font-size:1.1rem;letter-spacing:0.02em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width 0.3s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active{color:var(--white)}
+.nav-links a.active::after{width:100%}
+.nav-cta{padding:0.5rem 1.25rem;background:var(--gold);color:var(--blue);border:none;border-radius:6px;font-weight:600;font-size:0.85rem;cursor:pointer;text-decoration:none;transition:transform 0.2s,background 0.3s}
+.nav-cta:hover{background:var(--gold-light);transform:translateY(-1px)}
+.nav-mobile-toggle{display:none;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer}
+.nav-mobile-menu{display:none;position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(9,29,66,0.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.nav-mobile-menu.active{display:flex}
+.nav-mobile-menu a{color:var(--white);font-size:1.8rem;font-weight:600;text-decoration:none;padding:0.8rem 2rem;min-height:48px;display:flex;align-items:center;justify-content:center}
+.nav-mobile-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--white);font-size:2rem;cursor:pointer}
+
+.page-hero{position:relative;width:100%;min-height:60vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--blue);padding-top:80px}
+.page-hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(180deg,rgba(9,29,66,0.9) 0%,rgba(13,43,94,0.75) 50%,rgba(9,29,66,0.95) 100%)}
+#hero-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2}
+.page-hero-content{position:relative;z-index:3;text-align:center;padding:2rem;max-width:800px}
+.page-hero-badge{display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;margin-bottom:1.5rem;border:1px solid var(--gold);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase}
+.page-hero-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:1rem;letter-spacing:-0.02em}
+.page-hero-title .gold{color:var(--gold)}
+.page-hero-subtitle{font-size:clamp(0.95rem,2vw,1.2rem);color:var(--text-secondary);font-weight:400;line-height:1.6}
+
+.section{padding:5rem 2rem;position:relative}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-size:0.75rem;font-weight:700;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+.section-title{font-size:clamp(1.8rem,4vw,2.2rem);font-weight:800;line-height:1.2;margin-bottom:1rem;border-bottom:3px solid var(--gold);display:inline-block;padding-bottom:0.3rem}
+.section-desc{font-size:1.05rem;color:var(--text-secondary);max-width:600px;margin-bottom:3rem;line-height:1.8}
+.section-reveal{opacity:1;transform:translateY(0);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1)}
+.section-reveal.active{opacity:1;transform:translateY(0)}
+.section-reveal-delay-1{transition-delay:0.1s}
+.section-reveal-delay-2{transition-delay:0.2s}
+.section-reveal-delay-3{transition-delay:0.3s}
+.section-reveal-delay-4{transition-delay:0.4s}
+
+.content-block{background:var(--blue);display:block}
+
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.content-grid.reverse{direction:rtl}
+.content-grid.reverse>*{direction:ltr}
+.content-text h3{font-size:1.5rem;font-weight:700;margin-bottom:1rem}
+.content-text p{color:#e2e8f0;line-height:2.0;margin-bottom:1rem}
+.content-text .highlight{color:var(--gold);font-weight:700}
+
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem}
+.feature-list li{display:flex;align-items:flex-start;gap:0.75rem;color:var(--text-secondary);line-height:1.6}
+.feature-list .icon{width:28px;height:28px;border-radius:8px;background:rgba(200,150,62,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;color:var(--gold);font-weight:700;margin-top:2px}
+
+.info-card{padding:2rem;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:16px;margin-bottom:1.5rem;transition:border-color 0.3s,transform 0.3s}
+.info-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.info-card h4{font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;color:var(--gold)}
+.info-card p{font-size:0.95rem;color:#cbd5e0;line-height:1.7}
+
+.compare-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:2rem;border-radius:12px;overflow:hidden;border:1px solid var(--border-glass)}
+.compare-table th{background:rgba(200,150,62,0.15);color:var(--gold);font-weight:700;padding:1rem;text-align:left;font-size:0.9rem}
+.compare-table td{padding:1rem;border-top:1px solid var(--border-glass);color:var(--text-secondary);font-size:0.9rem}
+.compare-table tr:hover td{background:rgba(255,255,255,0.02)}
+.compare-table .check{color:var(--gold);font-weight:700}
+.compare-table .cross{color:rgba(255,255,255,0.3)}
+
+.flow-steps{display:flex;flex-direction:column;gap:0;position:relative;padding:2rem 0}
+.flow-step{display:flex;align-items:flex-start;gap:1.5rem;padding:1.5rem 0;position:relative}
+.flow-step-num{width:48px;height:48px;border-radius:50%;background:var(--gold);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;flex-shrink:0;z-index:1}
+.flow-step-content h4{font-size:1.1rem;font-weight:700;margin-bottom:0.3rem}
+.flow-step-content p{font-size:0.9rem;color:var(--text-secondary);line-height:1.6}
+.flow-line{position:absolute;left:24px;top:48px;width:2px;height:calc(100% - 48px);background:linear-gradient(to bottom,var(--gold),rgba(200,150,62,0.2))}
+.flow-step:last-child .flow-line{display:none}
+
+.risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.risk-card{padding:2rem;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:16px;transition:border-color 0.3s,transform 0.3s}
+.risk-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.risk-card-icon{width:48px;height:48px;border-radius:12px;background:rgba(200,150,62,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.3rem;color:var(--gold)}
+.risk-card h4{font-size:1.05rem;font-weight:700;margin-bottom:0.5rem}
+.risk-card p{font-size:0.9rem;color:var(--text-secondary);line-height:1.7}
+
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:center;padding:4rem 0}
+.stat-item{padding:1.5rem}
+.stat-value{font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--gold);line-height:1;margin-bottom:0.5rem}
+.stat-label{font-size:0.9rem;color:var(--text-secondary)}
+
+.cta-banner{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%);border:1px solid rgba(200,150,62,0.3);border-radius:20px;padding:4rem 2rem;text-align:center;margin:4rem 0}
+.cta-banner h3{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;margin-bottom:1rem}
+.cta-banner p{color:var(--text-secondary);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-block;padding:1rem 2.5rem;background:var(--gold);color:var(--blue);font-size:1.1rem;font-weight:700;border:none;border-radius:8px;cursor:pointer;text-decoration:none;transition:transform 0.25s,box-shadow 0.3s;box-shadow:0 4px 24px rgba(200,150,62,0.3)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(200,150,62,0.45)}
+
+.footer{background:var(--blue);padding:4rem 2rem 2rem;border-top:1px solid var(--border-glass);position:relative;overflow:hidden}
+.footer-overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(9,29,66,0.8) 0%,rgba(9,29,66,0.95) 100%)}
+#footerParticles{position:absolute;bottom:0;left:0;width:100%;height:200px;pointer-events:none;z-index:1}
+.footer-inner{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem}
+.footer-brand p{color:var(--text-secondary);font-size:0.9rem;margin-top:1rem;line-height:1.7}
+.footer h4{font-size:0.95rem;font-weight:700;margin-bottom:1rem;color:var(--gold)}
+.footer ul{list-style:none}
+.footer li{margin-bottom:0.6rem}
+.footer a{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;transition:color 0.3s}
+.footer a:hover{color:var(--gold)}
+.footer-contact-item{display:flex;gap:0.6rem;align-items:flex-start;margin-bottom:0.8rem;font-size:0.9rem;color:var(--text-secondary)}
+.footer-contact-icon{color:var(--gold);font-weight:700;min-width:16px}
+.footer-bottom{padding-top:1.5rem;border-top:2px solid var(--gold);display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;color:var(--text-muted)}
+
+/* ── Video Section ── */
+.video-section{padding:0;position:relative;overflow:hidden}
+.video-full{position:relative;overflow:hidden}
+.video-full video{width:100%;display:block;border:none;border-radius:0}
+.video-full-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,29,66,0.4) 0%,rgba(9,29,66,0.15) 50%,rgba(9,29,66,0.4) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;z-index:2}
+.video-full-overlay .section-label{margin-bottom:0.5rem}
+.video-full-overlay h2{font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:800;text-align:center}
+.video-full-overlay p{color:var(--text-secondary);font-size:1rem;margin-top:0.5rem;text-align:center}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-mobile-toggle{display:block}
+  .content-grid{grid-template-columns:1fr;gap:2rem}
+  .content-grid.reverse{direction:ltr}
+  .stats-row{grid-template-columns:1fr}
+  .compare-table{font-size:0.8rem}
+  .compare-table th,.compare-table td{padding:0.6rem 0.5rem}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
+  .section{padding:4rem 1.25rem}
+}
+
+
+
+</style>
+</head>
+<body>
+<div id="mouseGlow"></div>
+<div id="hexGrid"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="乾翔衍庆"><span>乾翔关务</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="tariff.html">关税优化</a></li>
+      <li><a href="ddp.html" class="active">DDP贸易</a></li>
+      <li><a href="ior.html">IOR备案</a></li>
+      <li><a href="customs.html">专业清关</a></li>
+      <li><a href="partner.html">渠道合作</a></li>
+      <li><a href="contact.html">联系我们</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">免费咨询</a>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="菜单">&#9776;</button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="mobileMenu">
+  <button class="nav-mobile-close" id="mobileClose">&times;</button>
+  <a href="index.html">首页</a><a href="tariff.html">关税优化</a><a href="ddp.html">DDP贸易</a><a href="ior.html">IOR备案</a><a href="customs.html">专业清关</a><a href="partner.html">渠道合作</a><a href="contact.html">联系我们</a>
+</div>
+
+<section class="page-hero" style="min-height:70vh">
+  <video src="videos/qianxiang_v5_scenes/D3.mp4" autoplay muted loop playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0"></video>
+  <div class="page-hero-overlay" style="z-index:1"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="page-hero-content">
+    <div class="page-hero-badge">DELIVERED DUTY PAID</div>
+    <h1 class="page-hero-title">DDP<span class="gold">完税后交货</span></h1>
+    <p class="page-hero-subtitle">从中国工厂到美国客户门口，全程含税含运费，客户零操心</p>
+  </div>
+</section>
+
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="content-grid">
+      <div class="content-text section-reveal">
+        <div class="section-label">什么是DDP</div>
+        <h3>Delivered Duty Paid -- 完税后交货</h3>
+        <p>DDP是国际贸易术语中卖方责任最大的交货方式。卖方负责将货物从工厂运至目的地，并承担<span class="highlight">全部运输费用、进口关税、增值税</span>等所有税费。</p>
+        <p>对于买方而言，DDP意味着<span class="highlight">零操心</span> -- 收货即上架，无需处理任何进口手续、关税计算或海关申报。</p>
+        <ul class="feature-list">
+          <li><span class="icon">&#10003;</span>全程含税含运费，一口价透明</li>
+          <li><span class="icon">&#10003;</span>买方零操心，收货即上架</li>
+          <li><span class="icon">&#10003;</span>规避买方进口合规风险</li>
+          <li><span class="icon">&#10003;</span>缩短交货周期，提升客户体验</li>
+        </ul>
+      </div>
+      <div class="section-reveal section-reveal-delay-2">
+        <div class="info-card">
+          <h4>DDP vs 其他贸易术语</h4>
+          <p>相比FOB、CIF等术语，DDP将所有进口风险和成本转移给卖方，买方只需等待收货。这对美国中小买家尤其有吸引力。</p>
+        </div>
+        <div class="info-card">
+          <h4>适用场景</h4>
+          <p>跨境电商B2C、中小批量B2B贸易、新品试销、美国中小零售商直采等场景，DDP是最佳选择。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section content-block-alt">
+  <div class="section-inner">
+    <div class="section-label section-reveal">流程对比</div>
+    <h2 class="section-title section-reveal">传统模式 vs DDP模式</h2>
+    <p class="section-desc section-reveal">直观对比两种模式的差异，了解DDP如何简化您的跨境贸易流程。</p>
+    <div class="section-reveal section-reveal-delay-1">
+      <table class="compare-table">
+        <thead>
+          <tr><th>环节</th><th>传统FOB/CIF</th><th>乾翔DDP</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>出口报关</td><td class="cross">卖方负责</td><td class="check">乾翔负责</td></tr>
+          <tr><td>国际运输</td><td class="cross">买方安排</td><td class="check">乾翔负责</td></tr>
+          <tr><td>进口清关</td><td class="cross">买方安排</td><td class="check">乾翔负责</td></tr>
+          <tr><td>关税缴纳</td><td class="cross">买方缴纳</td><td class="check">乾翔缴纳</td></tr>
+          <tr><td>内陆配送</td><td class="cross">买方安排</td><td class="check">乾翔负责</td></tr>
+          <tr><td>买方工作量</td><td class="cross">5个环节</td><td class="check">0个环节</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="section-label section-reveal">乾翔DDP流程</div>
+    <h2 class="section-title section-reveal">从工厂到门口，<span style="color:var(--gold)">全链路可控</span></h2>
+    <p class="section-desc section-reveal">标准化DDP操作流程，确保每票货物准时、合规、低成本交付。</p>
+    <div class="flow-steps section-reveal section-reveal-delay-1">
+      <div class="flow-step">
+        <div class="flow-step-num">01</div>
+        <div class="flow-step-content">
+          <h4>需求确认与报价</h4>
+          <p>确认货物信息、目的地、时效要求，提供DDP一口价报价，包含全部费用。</p>
+        </div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">02</div>
+        <div class="flow-step-content">
+          <h4>工厂提货与出口报关</h4>
+          <p>安排提货，完成出口报关手续，确保单证齐全合规。</p>
+        </div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">03</div>
+        <div class="flow-step-content">
+          <h4>国际运输</h4>
+          <p>海运/空运/铁路多式联运，实时追踪货物状态，确保运输时效。</p>
+        </div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">04</div>
+        <div class="flow-step-content">
+          <h4>美国进口清关与缴税</h4>
+          <p>专业团队完成美国海关申报、缴纳关税和增值税，确保合规通关。</p>
+        </div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">05</div>
+        <div class="flow-step-content">
+          <h4>最后一公里配送</h4>
+          <p>安排内陆运输，将货物送至客户指定地址，完成签收确认。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section content-block-alt">
+  <div class="section-inner">
+    <div class="section-label section-reveal">乾翔DDP优势</div>
+    <h2 class="section-title section-reveal">为什么选择<span style="color:var(--gold)">乾翔DDP</span></h2>
+    <p class="section-desc section-reveal">作为纯美资 SDVOSB 企业，乾翔拥有天然的跨境DDP服务优势。</p>
+    <div class="risk-grid">
+      <div class="risk-card section-reveal section-reveal-delay-1">
+        <div class="risk-card-icon">B</div>
+        <h4>中美双团队</h4>
+        <p>中国成都+美国双办公室运营，中美两地专业关务顾问团队，中英双语无缝沟通。中国团队负责出口报关和工厂对接，美国团队负责进口清关和末端配送，确保每个环节高效衔接。</p>
+      </div>
+      <div class="risk-card section-reveal section-reveal-delay-2">
+        <div class="risk-card-icon">$</div>
+        <h4>实时关税计算</h4>
+        <p>基于2万+编码数据库和实时关税政策，提供精准的DDP一口价报价。报价包含全部费用：国际运费、进口关税、增值税、清关费、末端配送费。客户无需担心任何隐藏费用，成本完全可控。</p>
+      </div>
+      <div class="risk-card section-reveal section-reveal-delay-3">
+        <div class="risk-card-icon">P</div>
+        <h4>门到门全程追踪</h4>
+        <p>从中国工厂提货到美国客户签收，全程物流可视化追踪。实时更新货物状态：已提货、已报关、已装船、已到港、清关中、派送中、已签收。客户可随时查看货物动态，安心无忧。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LE Framework SOP -->
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="section-label section-reveal">LE Framework SOP</div>
+    <h2 class="section-title section-reveal">全球进口与关税减免<span style="color:var(--gold)">标准操作流程</span></h2>
+    <p class="section-desc section-reveal">FY2026 LE Framework Operations Manual，明确商品从各国进口至美国的完整操作流程。</p>
+    <div class="flow-steps section-reveal section-reveal-delay-1">
+      <div class="flow-step">
+        <div class="flow-step-num">01</div>
+        <div class="flow-step-content">
+          <h4>全球进口架构 — 收货人(IOR) + 美国海关通知方</h4>
+          <p>客户沿用自有货运代理/物流合作方；依托SDVOSB资质享受关税减免。该模式支持客户自有物流合作方，同时通过GSA计划实现合法双渠道分销。</p>
+        </div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">02</div>
+        <div class="flow-step-content">
+          <h4>海关与关税优化</h4>
+          <p>清关前置流程：发货前核验所有单据有效性。确认货物符合关税减免适用条件：联邦采购条例25部分、19.14部分、ITAR/EAR豁免条款、USMCA、GSP等。由LE合作报关行按优惠税率提交清关申报。</p>
+        </div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">03</div>
+        <div class="flow-step-content">
+          <h4>仓储与库存管理</h4>
+          <p>所有入仓货物录入数字化管理系统，为合作方提供实时库存监控端口。质量管控包含：包装完整性检查、订单准确性核验、合规单据审核。</p>
+        </div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">04</div>
+        <div class="flow-step-content">
+          <h4>入库客户订单履约</h4>
+          <p>接收订单 → 仓库拣货 → 制作履约单据与运输标签 → 物流取货 → 同步追踪单号。五步标准化流程确保每票订单准时、准确交付。</p>
+        </div>
+        <div class="flow-line"></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">05</div>
+        <div class="flow-step-content">
+          <h4>末端配送与追踪</h4>
+          <p>路径A：出口操作 → 美国清关 → 直送买家。路径B：运抵仓库 → 录入系统 → 待售状态。全程在美国海关ACE系统下合法申报，流程透明可查，记录永久留存。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Warehousing Highlights -->
+<section class="section content-block-alt">
+  <div class="section-inner">
+    <div class="section-label section-reveal">仓储管理</div>
+    <h2 class="section-title section-reveal">美国仓储<span style="color:var(--gold)">12万平米</span></h2>
+    <p class="section-desc section-reveal">仓库位于美国密苏里州斯普林菲尔德市，全美还有12个中转仓。</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem">
+      <div class="info-card section-reveal section-reveal-delay-1">
+        <h4>数字化管理系统</h4>
+        <p>所有入仓货物录入数字化管理系统，为合作方提供实时库存监控端口。服务团队配合专业管理软件及智能化设备提供高效科学的仓储、分拣及包装服务。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-2">
+        <h4>实时库存监控</h4>
+        <p>扩展面积达12万平方米，包含常温、恒温和冷藏仓，满足不同商品的储存需求。全美12个中转仓网络，支持灵活的库存调配。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-3">
+        <h4>质量管控</h4>
+        <p>三项核心质控：包装完整性检查、订单准确性核验、合规单据审核。确保每票货物从入库到出库全程品质可控。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="section-label section-reveal">客户零操心</div>
+    <h2 class="section-title section-reveal">您只需<span style="color:var(--gold)">等待收货</span></h2>
+    <div class="stats-row">
+      <div class="stat-item section-reveal section-reveal-delay-1">
+        <div class="stat-value">0</div>
+        <div class="stat-label">买方需要处理的环节</div>
+      </div>
+      <div class="stat-item section-reveal section-reveal-delay-2">
+        <div class="stat-value">15-25天</div>
+        <div class="stat-label">门到门平均时效</div>
+      </div>
+      <div class="stat-item section-reveal section-reveal-delay-3">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">费用透明度</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 板块4: DDP全流程时间线 -->
+<section class="section content-block-alt">
+  <div class="section-inner">
+    <div class="section-label section-reveal">DDP全流程时间线</div>
+    <h2 class="section-title section-reveal">从工厂提货到客户签收<span style="color:var(--gold)">全链路可视化</span></h2>
+    <p class="section-desc section-reveal">标准DDP全流程时间线，每一步清晰可控，让您实时掌握货物动态。</p>
+    <div class="section-reveal section-reveal-delay-1" style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr><th>环节</th><th>操作内容</th><th>时效</th><th>乾翔负责</th><th>客户参与</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>① 工厂提货</strong></td><td>安排提货车至工厂提货，检查包装完整性，拍照留档</td><td style="color:var(--gold);font-weight:700">1-3天</td><td style="color:var(--gold)">✓ 全程负责</td><td>提供工厂地址和联系人</td></tr>
+          <tr><td><strong>② 出口报关</strong></td><td>准备出口报关单据，完成中国海关申报，取得放行条</td><td style="color:var(--gold);font-weight:700">1天</td><td style="color:var(--gold)">✓ 全程负责</td><td>确认品名和货值</td></tr>
+          <tr><td><strong>③ 国际海运</strong></td><td>集装箱装船/拼箱发运，实时追踪船期和位置</td><td style="color:var(--gold);font-weight:700">20-30天</td><td style="color:var(--gold)">✓ 全程负责</td><td>查看追踪看板</td></tr>
+          <tr><td><strong>③ 国际空运</strong></td><td>航空货运发运，舱位预订和航班追踪</td><td style="color:var(--gold);font-weight:700">5-7天</td><td style="color:var(--gold)">✓ 全程负责</td><td>查看追踪看板</td></tr>
+          <tr><td><strong>④ 美国清关</strong></td><td>海关申报、缴纳关税和增值税、查验配合</td><td style="color:var(--gold);font-weight:700">3-5天</td><td style="color:var(--gold)">✓ 全程负责</td><td>无需参与</td></tr>
+          <tr><td><strong>⑤ 尾程配送</strong></td><td>内陆卡车/快递配送至客户指定地址</td><td style="color:var(--gold);font-weight:700">1-3天</td><td style="color:var(--gold)">✓ 全程负责</td><td>签收确认</td></tr>
+          <tr><td><strong>⑥ 客户签收</strong></td><td>货物送达，客户验货签收，服务完成</td><td style="color:var(--gold);font-weight:700">即时</td><td>售后服务</td><td>验收货物</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:2rem;padding:1.5rem;background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.3);border-radius:12px;text-align:center" class="section-reveal section-reveal-delay-2">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem">
+        <div><div style="font-size:1.8rem;font-weight:900;color:var(--gold)">25-40天</div><div style="font-size:0.8rem;color:var(--text-muted)">海运总时效</div></div>
+        <div><div style="font-size:1.8rem;font-weight:900;color:var(--gold)">10-15天</div><div style="font-size:0.8rem;color:var(--text-muted)">空运总时效</div></div>
+        <div><div style="font-size:1.8rem;font-weight:900;color:var(--gold)">100%</div><div style="font-size:0.8rem;color:var(--text-muted)">客户零操心</div></div>
+        <div><div style="font-size:1.8rem;font-weight:900;color:var(--gold)">实时</div><div style="font-size:0.8rem;color:var(--text-muted)">全程可追踪</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 板块5: DDP适用场景 -->
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="section-label section-reveal">DDP适用场景</div>
+    <h2 class="section-title section-reveal">四大场景<span style="color:var(--gold)">精准匹配</span></h2>
+    <p class="section-desc section-reveal">DDP完税后交货服务，特别适合以下四类客户群体。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem">
+      <div class="info-card section-reveal section-reveal-delay-1">
+        <h4>想省心的出口商</h4>
+        <p>国内工厂或贸易商希望一站式搞定出口报关、国际运输、美国清关等全部环节。传统模式下需要分别对接报关行、货代、清关行，沟通成本高、出错概率大。选择DDP，一个对接窗口解决全部问题，工厂只需备货发货。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-2">
+        <h4>没有美国公司的工厂</h4>
+        <p>中国工厂直接向美国客户出货，但在美国没有注册公司、没有IOR资质、不了解美国海关法规。使用乾翔DDP服务，无需在美国成立公司即可合法进口。乾翔作为IOR承担全部进口法律责任，工厂零合规风险。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-3">
+        <h4>亚马逊FBA卖家</h4>
+        <p>跨境电商卖家需要将货物发往亚马逊FBA仓库，但对美国清关流程不熟悉。乾翔DDP服务可直接将货物清关后送至FBA仓库，省去中间环节。同时通过关税优化帮卖家降低入库成本，提升利润率。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-4">
+        <h4>需要价格透明化的客户</h4>
+        <p>传统FOB/CIF模式下，买方需自行承担进口关税、清关费、内陆运费等多项不确定成本。选择DDP，一口价包含全部费用，客户报价即可成交。价格透明、成本可控，特别适合预算管理严格的采购团队。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 板块6: DDP费用构成 -->
+<section class="section content-block-alt">
+  <div class="section-inner">
+    <div class="section-label section-reveal">DDP费用构成</div>
+    <h2 class="section-title section-reveal">一口价包含<span style="color:var(--gold)">全部费用</span></h2>
+    <p class="section-desc section-reveal">乾翔DDP报价打包以下全部费用，客户无需支付任何额外费用。</p>
+    <div class="section-reveal section-reveal-delay-1" style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr><th>费用项目</th><th>具体内容</th><th>传统模式</th><th>乾翔DDP</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>国内段运输</strong></td><td>工厂提货、短途运输至出口港口、装卸费用</td><td>卖方承担</td><td style="color:var(--gold);font-weight:700">包含</td></tr>
+          <tr><td><strong>出口报关费</strong></td><td>中国海关申报、单证处理、查验配合</td><td>卖方承担</td><td style="color:var(--gold);font-weight:700">包含</td></tr>
+          <tr><td><strong>国际运费</strong></td><td>海运/空运/铁路运费、码头操作费、燃油附加费</td><td>买方承担</td><td style="color:var(--gold);font-weight:700">包含</td></tr>
+          <tr><td><strong>关税代缴</strong></td><td>MFN税率、S.301附加税、S.122对等关税（经优化）</td><td>买方缴纳</td><td style="color:var(--gold);font-weight:700">包含</td></tr>
+          <tr><td><strong>清关服务费</strong></td><td>美国海关ACE系统申报、ISF安全申报、单证审核</td><td>买方安排</td><td style="color:var(--gold);font-weight:700">包含</td></tr>
+          <tr><td><strong>增值税/消费税</strong></td><td>美国联邦消费税、州销售税（按目的地州税率）</td><td>买方缴纳</td><td style="color:var(--gold);font-weight:700">包含</td></tr>
+          <tr><td><strong>尾程配送</strong></td><td>美国港口/机场至客户门口的内陆运输费用</td><td>买方安排</td><td style="color:var(--gold);font-weight:700">包含</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:2rem;padding:2rem;background:linear-gradient(135deg,rgba(200,150,62,0.12),rgba(200,150,62,0.04));border:1px solid rgba(200,150,62,0.4);border-radius:12px;text-align:center" class="section-reveal section-reveal-delay-2">
+      <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.3rem">乾翔DDP打包价</div>
+      <div style="font-size:2rem;font-weight:900;color:var(--gold);margin-bottom:0.5rem">以上7项费用全部包含</div>
+      <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.8;max-width:600px;margin:0 auto">报价签发后锁定价格，货物到港后如有关税变动由乾翔承担。客户收到报价即可确定最终成本，无需预留任何关税缓冲资金。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="cta-banner section-reveal">
+      <h3>想让客户零操心收货？</h3>
+      <p>了解乾翔DDP服务如何简化您的中美跨境贸易流程。</p>
+      <a href="contact.html" class="cta-btn">咨询DDP方案</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-overlay"></div>
+  <canvas id="footerParticles"></canvas>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:0.5rem"><img src="logo.png" alt="乾翔衍庆" style="height:32px"><span style="font-weight:700;font-size:1rem">乾翔衍庆</span></a>
+        <p>四川乾翔衍庆物流科技有限公司，中美合资企业，美方 Limitless Evolution LLC 为纯美资 SDVOSB 股东方。专注于中美跨境贸易的关税减免、DDP贸易、IOR备案与专业清关服务，助力企业降本增效。</p>
+      </div>
+      <div><h4>服务</h4><ul><li><a href="tariff.html">中美关税减免</a></li><li><a href="ddp.html">DDP贸易</a></li><li><a href="ior.html">合规IOR备案</a></li><li><a href="customs.html">一站式清关</a></li><li><a href="partner.html">渠道合作</a></li></ul></div>
+      <div><h4>关于</h4><ul><li><a href="index.html">公司简介</a></li><li><a href="tariff.html">关税优化</a></li><li><a href="ddp.html">DDP贸易</a></li><li><a href="partner.html">渠道合作</a></li><li><a href="contact.html">联系我们</a></li></ul></div>
+      <div>
+        <h4>联系我们</h4>
+        <div class="footer-contact-item"><span class="footer-contact-icon">&#9742;</span><span>18228095651（Steven）</span></div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">&#9993;</span><span>Steven@qxyqtech.cn</span></div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">&#9873;</span><span>中国·四川省成都市高新区天府大道北段1700号环球中心E2-1806</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 四川乾翔衍庆物流科技有限公司 QianXiang YanQing Logistics Technology Co., Ltd. All rights reserved.</span>
+      <span>中美合资 — 美方 SDVOSB 股东方 Limitless Evolution · 专业的事，交给乾翔</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var g=document.getElementById('mouseGlow'),mx=-500,my=-500,cx=-500,cy=-500;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});(function t(){cx+=(mx-cx)*0.06;cy+=(my-cy)*0.06;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(t)})();})();
+(function(){var grid=document.getElementById('hexGrid');for(var i=0;i<15;i++){var h=document.createElement('div');h.className='hex-shape';var s=Math.random()*80+40;h.style.width=s+'px';h.style.height=s+'px';h.style.left=Math.random()*100+'%';h.style.top=Math.random()*100+'%';h.style.animationDelay=(Math.random()*10)+'s';h.style.animationDuration=(Math.random()*15+15)+'s';grid.appendChild(h)}window.addEventListener('scroll',function(){grid.style.transform='rotate('+window.pageYOffset*0.02+'deg)'},{passive:true});})();
+(function(){
+  var c=document.getElementById('hero-canvas'),x=c.getContext('2d'),W,H,p=[],a=[],rts=[],m={x:W/2,y:H/2};
+  function rs(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;m.x=W/2;m.y=H/2}
+  window.addEventListener('resize',rs);rs();
+  function N(){this.reset(true)}
+  N.prototype.reset=function(i){this.x=Math.random()*W;this.y=i?Math.random()*H:H+10;this.s=Math.random()*3+1;this.vx=(Math.random()-0.5)*0.4;this.vy=-Math.random()*0.7-0.3;this.al=Math.random()*0.5+0.3;this.lf=Math.random()*500+200;this.ag=i?Math.random()*this.lf:0};
+  N.prototype.u=function(){this.x+=this.vx;this.y+=this.vy;this.ag++;if(this.ag>this.lf||this.x<-20||this.x>W+20||this.y<-20)this.reset(false)};
+  N.prototype.d=function(){var f=1-this.ag/this.lf;x.beginPath();x.arc(this.x,this.y,this.s,0,Math.PI*2);x.fillStyle='rgba(200,150,62,'+this.al*f+')';x.fill()};
+  function A(){this.reset()}
+  A.prototype.reset=function(){this.x1=Math.random()*W;this.y1=Math.random()*H;this.x2=Math.random()*W;this.y2=Math.random()*H;this.prog=0;this.speed=Math.random()*0.0005+0.0002;this.len=Math.random()*0.6+0.2};
+  A.prototype.u=function(){this.prog+=this.speed;if(this.prog>1)this.reset()};
+  A.prototype.d=function(){var t=this.prog,t1=Math.max(0,t-this.len),a1=Math.min(1,t1/this.len*3),a2=Math.min(1,(this.len-t)/this.len*3);if(t<0.05||t>0.95)return;var cx=this.x1+(this.x2-this.x1)*t,cy=this.y1+(this.y2-this.y1)*t,cx1=this.x1+(this.x2-this.x1)*t1,cy1=this.y1+(this.y2-this.y1)*t1;x.beginPath();x.moveTo(cx1,cy1);x.lineTo(cx,cy);x.strokeStyle='rgba(200,150,62,0.5)';x.lineWidth=1.5;x.shadowColor='rgba(200,150,62,0.4)';x.shadowBlur=6;x.stroke();x.shadowBlur=0};
+  function B(){this.x=Math.random()*W;this.y=Math.random()*H;this.s=Math.random()*5+3;this.ph=Math.random()*Math.PI*2;this.vy=-Math.random()*0.1-0.02}
+  B.prototype.u=function(){this.y+=this.vy;this.ph+=0.01;if(this.y<-30){this.x=Math.random()*W;this.y=H+30}};
+  B.prototype.d=function(){var g=Math.sin(this.ph)*0.5+0.5;x.beginPath();x.arc(this.x,this.y,this.s+g*4,0,Math.PI*2);x.shadowColor='rgba(200,150,62,'+(0.5*g)+')';x.shadowBlur=20+15*g;x.fillStyle='rgba(200,150,62,'+(0.06+g*0.1)+')';x.fill();x.shadowBlur=0};
+  for(var i=0;i<100;i++)p.push(new N());for(var i=0;i<12;i++)a.push(new A());for(var i=0;i=6;i<6;i++){var b=new B();b.y=Math.random()*H}
+  // Can't push B objects properly in compressed syntax, using different approach
+  // Let's keep it simple with particles + routes
+  (function an(){
+    x.clearRect(0,0,W,H);
+    for(var i=0;i<p.length;i++){for(var j=i+1;j<p.length;j++){var dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle='rgba(200,150,62,'+0.1*(1-d/120)+')';x.lineWidth=0.5;x.stroke()}}p[i].u();p[i].d()}
+    a.forEach(function(o){o.u();o.d()});
+    requestAnimationFrame(an);
+  })();
+  c.addEventListener('mousemove',function(e){var b=c.getBoundingClientRect();m.x=e.clientX-b.left;m.y=e.clientY-b.top});
+  c.addEventListener('mouseleave',function(){m.x=W/2;m.y=H/2});
+})();
+(function(){var c=document.getElementById('footerParticles'),x=c.getContext('2d'),W,H,p=[];function r(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight}window.addEventListener('resize',r);r();function F(){this.x=Math.random()*W;this.y=H+Math.random()*20;this.r=Math.random()*2+0.5;this.vx=(Math.random()-0.5)*0.3;this.vy=-Math.random()*0.6-0.2;this.alpha=Math.random()*0.6+0.2;this.life=Math.random()*300+100;this.age=0}F.prototype.u=function(){this.x+=this.vx;this.y+=this.vy;this.age++;if(this.age>this.life||this.y<-10){this.x=Math.random()*W;this.y=H+Math.random()*20;this.age=0}};F.prototype.d=function(){var f=Math.sin(Math.PI*this.age/this.life);x.beginPath();x.arc(this.x,this.y,this.r,0,Math.PI*2);x.fillStyle='rgba(200,150,62,'+this.alpha*f+')';x.fill()};for(var i=0;i<40;i++)p.push(new F());(function a(){x.clearRect(0,0,W,H);p.forEach(function(f){f.u();f.d()});requestAnimationFrame(a)})();})();
+gsap.registerPlugin(ScrollTrigger);
+gsap.to('#progressBar',{width:'100%',ease:'none',scrollTrigger:{trigger:'body',start:'top top',end:'bottom bottom',scrub:0.3}});
+window.addEventListener('scroll',function(){var n=document.getElementById('nav');if(window.pageYOffset>100)n.classList.add('scrolled');else n.classList.remove('scrolled')},{passive:true});
+document.querySelectorAll('.section-reveal').forEach(function(el){ScrollTrigger.create({trigger:el,start:'top 88%',onEnter:function(){el.classList.add('active')},once:true})});
+</script>
+<script>
+(function(){
+  var menu=document.getElementById('mobileMenu');
+  var toggle=document.getElementById('mobileToggle');
+  var close=document.getElementById('mobileClose');
+  function openMenu(){menu.classList.add('active')}
+  function closeMenu(){menu.classList.remove('active')}
+  toggle.addEventListener('click',openMenu);
+  close.addEventListener('click',closeMenu);
+  toggle.addEventListener('touchstart',function(e){e.preventDefault();openMenu()},{passive:false});
+  close.addEventListener('touchstart',function(e){e.preventDefault();closeMenu()},{passive:false});
+  var links=menu.querySelectorAll('a');
+  for(var i=0;i<links.length;i++){
+    links[i].addEventListener('click',closeMenu);
+    links[i].addEventListener('touchstart',closeMenu);
+  }
+})();
+</script>
+</body>
+</html>

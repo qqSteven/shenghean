@@ -1,17 +1,1530 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>盛禾安科技 & 四川乾翔衍庆物流科技 - 智慧物流解决方案</title>
-  <meta name="description" content="盛禾安科技四川有限公司与四川乾翔衍庆物流科技有限公司专注于智能物流、科技仓储、跨境贸易及关税优化解决方案，助力企业降本增效。" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/assets/index-DN8KZCuO.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-2aMCgC-e.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>乾翔关务 - 中美关税减免 · DDP贸易 · 合规IOR备案</title>
+<meta name="description" content="四川乾翔衍庆物流科技有限公司，中美合资企业。依托美方 SDVOSB 资质，提供中美关税减免、DDP贸易、合规IOR备案、专业清关一站式服务。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#0D2B5E;
+  --blue-dark:#091D42;
+  --blue-light:#163A75;
+  --white:#FFFFFF;
+  --gold:#C8963E;
+  --gold-light:#D4A94F;
+  --gold-dark:#A87A2E;
+  --text-primary:#F0F0F0;
+  --text-secondary:rgba(255,255,255,0.7);
+  --text-muted:rgba(255,255,255,0.5);
+  --border-glass:rgba(255,255,255,0.1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:'Inter','Geist','SF Pro Display','PingFang SC','Microsoft YaHei',system-ui,sans-serif;
+  background:var(--blue-dark);
+  color:var(--text-primary);
+  line-height:1.7;
+  font-size:16px;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+
+/* ── Mouse Glow (v3: enhanced gold gradient + lerp smooth) ── */
+#mouseGlow{
+  position:fixed;width:500px;height:500px;
+  border-radius:50%;pointer-events:none;z-index:9998;
+  background:radial-gradient(circle,rgba(200,150,62,0.20) 0%,rgba(200,150,62,0.08) 30%,rgba(200,150,62,0.02) 55%,transparent 70%);
+  transform:translate(-50%,-50%);
+  transition:opacity 0.3s;opacity:0;
+  will-change:left,top;
+  filter:blur(2px);
+}
+body:hover #mouseGlow{opacity:1}
+
+/* ── Hex Grid Background (v3: slow rotation on scroll) ── */
+#hexGrid{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;
+  pointer-events:none;opacity:0.06;
+  transition:transform 0.1s linear;
+}
+.hex-shape{
+  position:absolute;border:1px solid var(--gold);
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  animation:hexFloat 20s infinite ease-in-out;
+}
+@keyframes hexFloat{
+  0%,100%{transform:translateY(0) rotate(0deg);opacity:0.3}
+  50%{transform:translateY(-20px) rotate(30deg);opacity:0.6}
+}
+
+/* ── Progress Bar ── */
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:9999;width:0;will-change:width}
+
+/* ── Navigation (v3: frosted glass + gold border reveal) ── */
+.nav{
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  padding:1rem 2rem;
+  background:rgba(9,29,66,0.3);
+  backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
+  border-bottom:1px solid transparent;
+  transition:all 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.nav.scrolled{
+  background:rgba(9,29,66,0.75);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(200,150,62,0.4);
+  box-shadow:0 4px 30px rgba(0,0,0,0.25),0 1px 0 rgba(200,150,62,0.2);
+}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:var(--white)}
+.nav-logo img{height:40px;width:auto;filter:drop-shadow(0 0 8px rgba(200,150,62,0.6))}
+.nav-logo span{font-weight:700;font-size:1.1rem;letter-spacing:0.02em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;
+  transition:color 0.3s;position:relative;
+}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width 0.3s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active{color:var(--white)}
+.nav-links a.active::after{width:100%}
+.nav-cta{
+  padding:0.5rem 1.25rem;background:var(--gold);color:var(--blue);
+  border:none;border-radius:6px;font-weight:600;font-size:0.85rem;
+  cursor:pointer;text-decoration:none;transition:transform 0.2s,background 0.3s;
+}
+.nav-cta:hover{background:var(--gold-light);transform:translateY(-1px)}
+.nav-mobile-toggle{display:none;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer}
+.nav-mobile-menu{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100vh;
+  background:rgba(9,29,66,0.98);backdrop-filter:blur(20px);
+  z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+}
+.nav-mobile-menu.active{display:flex}
+.nav-mobile-menu a{color:var(--white);font-size:1.8rem;font-weight:600;text-decoration:none;padding:0.8rem 2rem;min-height:48px;display:flex;align-items:center;justify-content:center}
+.nav-mobile-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--white);font-size:2rem;cursor:pointer}
+
+/* ── Hero ── */
+.hero{
+  position:relative;width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;background:var(--blue);
+}
+.hero-bg-img{
+  position:absolute;top:0;left:0;width:100%;height:120%;z-index:0;
+  object-fit:cover;will-change:transform;
+}
+.hero-overlay{
+  position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;
+  background:linear-gradient(180deg,rgba(9,29,66,0.85) 0%,rgba(13,43,94,0.7) 40%,rgba(9,29,66,0.9) 100%);
+}
+#hero-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2}
+.hero-content{position:relative;z-index:3;text-align:center;padding:2rem;max-width:900px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  padding:0.5rem 1.5rem;margin-bottom:1.5rem;
+  border:1px solid var(--gold);border-radius:999px;
+  font-size:0.8rem;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;
+}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
+.hero-title{
+  font-size:clamp(2.5rem,7vw,4.5rem);font-weight:900;line-height:1.1;
+  margin-bottom:1rem;letter-spacing:-0.02em;
+}
+.hero-title .gold{color:var(--gold)}
+.hero-subtitle{
+  font-size:clamp(1rem,2.5vw,1.3rem);color:var(--text-secondary);
+  margin-bottom:1.5rem;font-weight:400;line-height:1.6;
+}
+.hero-tags{display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;margin-bottom:2.5rem}
+.hero-tag{
+  padding:0.35rem 1rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;
+  font-size:0.8rem;color:var(--gold);font-weight:500;
+  background:rgba(200,150,62,0.08);
+}
+.hero-jv{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.4rem 1rem;margin-bottom:2rem;
+  border:1px solid rgba(200,150,62,0.3);border-radius:6px;
+  font-size:0.75rem;color:var(--gold-light);font-weight:600;
+  background:rgba(200,150,62,0.06);letter-spacing:0.05em;
+}
+.hero-cta{
+  display:inline-block;padding:1rem 2.5rem;
+  background:var(--gold);color:var(--blue);
+  font-size:1.1rem;font-weight:700;border:none;border-radius:8px;
+  cursor:pointer;text-decoration:none;
+  transition:transform 0.25s,box-shadow 0.3s;
+  box-shadow:0 4px 24px rgba(200,150,62,0.3);
+}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(200,150,62,0.45)}
+.hero-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;
+  color:var(--text-muted);font-size:0.8rem;display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+}
+.hero-scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s infinite}
+@keyframes scrollPulse{0%,100%{opacity:0.3}50%{opacity:1}}
+
+/* ── Mobile CSS Globe (v3: static fallback for mobile) ── */
+.mobile-globe{
+  display:none;
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,rgba(22,58,117,0.8),rgba(13,43,94,0.95),rgba(9,29,66,1));
+  border:2px solid rgba(200,150,62,0.3);
+  box-shadow:0 0 60px rgba(200,150,62,0.15),inset 0 0 40px rgba(0,0,0,0.3);
+  z-index:1;
+}
+.mobile-globe::before{
+  content:'';position:absolute;top:15%;left:25%;width:50%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,150,62,0.4),transparent);
+  transform:rotate(-15deg);
+}
+.mobile-globe::after{
+  content:'';position:absolute;top:45%;left:10%;width:80%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,150,62,0.3),transparent);
+  transform:rotate(5deg);
+}
+.mobile-globe .meridian{
+  position:absolute;width:1px;height:100%;top:0;left:50%;
+  background:linear-gradient(to bottom,transparent,rgba(200,150,62,0.3),transparent);
+}
+.mobile-globe .meridian:nth-child(2){left:30%;transform:rotateY(60deg)}
+.mobile-globe .meridian:nth-child(3){left:70%;transform:rotateY(-60deg)}
+.mobile-globe .ring{
+  position:absolute;width:120%;height:120%;top:-10%;left:-10%;
+  border:1px solid rgba(200,150,62,0.15);border-radius:50%;
+  animation:ringPulse 4s infinite ease-in-out;
+}
+.mobile-globe .ring:nth-child(5){width:140%;height:140%;top:-20%;left:-20%;animation-delay:1s;opacity:0.5}
+@keyframes ringPulse{0%,100%{opacity:0.3;transform:scale(1)}50%{opacity:0.6;transform:scale(1.05)}}
+
+@media(max-width:768px){
+  #globe-container canvas{display:none!important}
+  .mobile-globe{display:block}
+}
+
+/* ── Section Commons ── */
+.section{padding:5rem 2rem;position:relative}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{
+  font-size:0.75rem;font-weight:700;color:var(--gold);letter-spacing:0.15em;
+  text-transform:uppercase;margin-bottom:0.75rem;
+}
+.section-title{font-size:clamp(1.8rem,4vw,2.2rem);font-weight:800;line-height:1.2;margin-bottom:1rem;border-bottom:3px solid var(--gold);display:inline-block;padding-bottom:0.3rem}
+.section-desc{font-size:1.05rem;color:var(--text-secondary);max-width:600px;margin-bottom:3rem;line-height:1.8}
+
+/* ── Section Reveal ── */
+.section-reveal{opacity:1;transform:translateY(0);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1)}
+.section-reveal.active{opacity:1;transform:translateY(0)}
+.section-reveal-delay-1{transition-delay:0.1s}
+.section-reveal-delay-2{transition-delay:0.2s}
+.section-reveal-delay-3{transition-delay:0.3s}
+.section-reveal-delay-4{transition-delay:0.4s}
+
+/* ── Pain Point ── */
+.pain{background:var(--blue);overflow:hidden}
+.pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.pain-visual{position:relative}
+.pain-number{
+  font-size:clamp(4rem,10vw,8rem);font-weight:900;color:var(--gold);
+  line-height:1;position:relative;
+}
+.pain-number .label{font-size:1rem;color:var(--text-muted);font-weight:500;display:block;margin-top:0.5rem}
+.pain-bars{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}
+.pain-bar{height:8px;border-radius:4px;background:rgba(200,150,62,0.15);overflow:hidden;position:relative}
+.pain-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),#e74c3c);width:0;transition:width 1.5s cubic-bezier(0.16,1,0.3,1)}
+.pain-bar-label{display:flex;justify-content:space-between;font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem}
+.pain-text .highlight{
+  color:var(--gold);font-weight:700;font-size:1.1rem;
+  border-bottom:2px solid var(--gold);padding-bottom:2px;
+}
+
+/* ── Services ── */
+.services{background:var(--blue-dark)}
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.service-card{
+  position:relative;perspective:800px;cursor:pointer;
+}
+.service-card-inner{
+  position:relative;padding:2.5rem 2rem;
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--border-glass);
+  border-radius:16px;
+  transition:transform 0.6s cubic-bezier(0.16,1,0.3,1),border-color 0.4s,box-shadow 0.4s;
+  transform-style:preserve-3d;
+  will-change:transform;
+  overflow:hidden;
+}
+.service-card-bg{
+  position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.08;z-index:0;pointer-events:none;
+}
+.service-card-inner>*:not(.service-card-bg){position:relative;z-index:1}
+/* v3: gold border glow run-light + float shadow + micro scale */
+.service-card:hover .service-card-inner{
+  border-color:var(--gold);
+  box-shadow:0 8px 40px rgba(200,150,62,0.25),0 0 0 1px rgba(200,150,62,0.3),inset 0 0 30px rgba(200,150,62,0.05);
+  transform:scale(1.03) translateY(-4px);
+}
+.service-card-inner::before{
+  content:'';position:absolute;inset:-2px;border-radius:18px;padding:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent,var(--gold),transparent);
+  background-size:200% 100%;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity 0.4s;pointer-events:none;z-index:6;
+}
+.service-card:hover .service-card-inner::before{
+  opacity:1;animation:borderRun 2s linear infinite;
+}
+@keyframes borderRun{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.service-icon{
+  width:56px;height:56px;border-radius:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.5rem;font-size:1.3rem;color:var(--blue);font-weight:800;
+}
+.service-card h3{font-size:1.2rem;font-weight:700;margin-bottom:0.75rem}
+.service-card p{font-size:0.95rem;color:#cbd5e0;line-height:1.7}
+.service-card .shine{
+  position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(200,150,62,0.12),transparent);
+  transform:skewX(-15deg);transition:left 0.8s;pointer-events:none;border-radius:16px;z-index:5;
+}
+.service-card:hover .shine{left:120%}
+
+/* ── v3: Keyword Tooltip (DDP/IOR/HS) ── */
+.kw-tooltip{
+  position:relative;display:inline;border-bottom:1.5px dashed var(--gold);
+  cursor:help;font-weight:700;color:var(--gold);font-size:inherit;
+}
+.kw-tooltip .tip-box{
+  position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(6px);
+  width:260px;padding:1rem 1.2rem;
+  background:rgba(9,29,66,0.95);backdrop-filter:blur(16px);
+  border:1px solid var(--gold);border-radius:10px;
+  font-size:0.82rem;color:var(--text-primary);font-weight:400;line-height:1.6;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity 0.3s,transform 0.3s;white-space:normal;z-index:50;
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+}
+.kw-tooltip .tip-box::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:var(--gold);
+}
+.kw-tooltip:hover .tip-box{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+/* ── Why Us ── */
+.why-us{background:var(--blue)}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.why-card{
+  padding:2rem;background:rgba(255,255,255,0.03);
+  border:1px solid var(--border-glass);border-radius:12px;
+  transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s;
+}
+.why-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 6px 30px rgba(200,150,62,0.12)}
+.why-card-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:rgba(200,150,62,0.15);display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.2rem;font-size:1.5rem;color:var(--gold);
+}
+.why-card h3{font-size:1.1rem;font-weight:700;margin-bottom:0.6rem}
+.why-card p{font-size:0.9rem;color:var(--text-secondary);line-height:1.7}
+
+/* ── Process ── */
+.process{background:var(--blue-dark);overflow:hidden}
+.process-track{
+  display:flex;gap:0;position:relative;
+  padding:3rem 0;
+  overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.process-track::-webkit-scrollbar{display:none}
+.process-step{
+  flex:0 0 220px;scroll-snap-align:start;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:0 1.5rem;position:relative;
+}
+.process-step::before{
+  content:'';position:absolute;top:28px;left:50%;width:100%;height:2px;
+  background:rgba(200,150,62,0.2);
+}
+.process-step:last-child::before{display:none}
+.process-step::after{
+  content:'';position:absolute;top:28px;left:calc(50% + 28px);width:calc(100% - 56px);height:2px;
+  background:linear-gradient(90deg,var(--gold),rgba(200,150,62,0.2));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.process-step.revealed::after{transform:scaleX(1)}
+.process-step:last-child::after{display:none}
+.step-num{
+  width:56px;height:56px;border-radius:50%;z-index:1;
+  background:var(--blue-dark);border:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;font-weight:800;color:var(--gold);
+  margin-bottom:1.5rem;transition:background 0.4s,color 0.4s;
+}
+.process-step.revealed .step-num{background:var(--gold);color:var(--blue)}
+.step-title{font-size:0.95rem;font-weight:700;margin-bottom:0.4rem}
+.step-desc{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+.process-nav{display:flex;justify-content:center;gap:0.75rem;margin-top:2rem}
+.process-dot{
+  width:8px;height:8px;border-radius:50%;background:rgba(200,150,62,0.3);
+  cursor:pointer;transition:background 0.3s,transform 0.3s;border:none;
+}
+.process-dot.active{background:var(--gold);transform:scale(1.3)}
+
+/* ── Port Banner (full-width logistics imagery) ── */
+.port-banner{
+  position:relative;width:100%;height:400px;overflow:hidden;
+}
+.port-banner-img{
+  width:100%;height:100%;object-fit:cover;
+}
+.port-banner-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(9,29,66,0.75) 0%,rgba(9,29,66,0.4) 50%,rgba(9,29,66,0.8) 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+}
+.port-banner-overlay .section-label{margin-bottom:0.5rem}
+.port-banner-overlay h2{font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:800;text-align:center}
+.port-banner-overlay p{color:var(--text-secondary);font-size:1rem;margin-top:0.5rem;text-align:center}
+
+/* ── Stats ── */
+.stats{background:var(--blue);position:relative;overflow:hidden}
+.stats::before{
+  content:'';position:absolute;top:0;left:0;width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+#statsCanvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.stats-map{
+  position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;
+  opacity:0.06;object-fit:cover;
+}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center;position:relative;z-index:1}
+.stat-item{padding:1.5rem 0}
+.stat-value{
+  font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;
+  color:var(--gold);line-height:1;margin-bottom:0.5rem;
+  font-variant-numeric:tabular-nums;
+  perspective:200px;
+}
+/* v3: flip digit container */
+.counter{display:inline-block;position:relative}
+.counter .digit{
+  display:inline-block;position:relative;
+  animation:none;
+}
+.counter .digit.flip{animation:digitFlip 0.5s ease-out}
+@keyframes digitFlip{
+  0%{transform:rotateX(0)}
+  50%{transform:rotateX(-90deg);opacity:0.5}
+  100%{transform:rotateX(0)}
+}
+.stat-label{font-size:0.9rem;color:var(--text-secondary);font-weight:500}
+.stat-suffix{font-size:0.6em;color:var(--gold-light);font-weight:600}
+
+/* ── Partners ── */
+.partners{background:var(--blue-dark)}
+.partners-inner{display:flex;align-items:stretch;gap:0;justify-content:center}
+.partner-logo-area{
+  width:200px;height:100px;
+  background:rgba(255,255,255,0.05);border:1px solid var(--border-glass);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  padding:1rem;
+}
+.partner-logo-area img{max-height:60px;width:auto;object-fit:contain}
+.partner-text{max-width:500px}
+.partner-text h3{font-size:1.3rem;font-weight:700;margin-bottom:0.75rem}
+.partner-text p{font-size:0.95rem;color:var(--text-secondary);line-height:1.8}
+
+/* ── Footer ── */
+.footer{
+  background:var(--blue);padding:4rem 2rem 2rem;border-top:1px solid var(--border-glass);
+  position:relative;overflow:hidden;
+}
+.footer-bg{
+  position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;
+  object-fit:cover;opacity:0.15;
+}
+.footer-overlay{
+  position:absolute;inset:0;z-index:0;
+  background:linear-gradient(180deg,rgba(9,29,66,0.8) 0%,rgba(9,29,66,0.95) 100%);
+}
+#footerParticles{position:absolute;bottom:0;left:0;width:100%;height:200px;pointer-events:none;z-index:1}
+.footer-inner{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem}
+.footer-brand p{color:var(--text-secondary);font-size:0.9rem;margin-top:1rem;line-height:1.7}
+.footer h4{font-size:0.95rem;font-weight:700;margin-bottom:1rem;color:var(--gold)}
+.footer ul{list-style:none}
+.footer li{margin-bottom:0.6rem}
+.footer a{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;transition:color 0.3s}
+.footer a:hover{color:var(--gold)}
+.footer-contact-item{display:flex;gap:0.6rem;align-items:flex-start;margin-bottom:0.8rem;font-size:0.9rem;color:var(--text-secondary)}
+.footer-contact-icon{color:var(--gold);font-weight:700;min-width:16px}
+.footer-map{
+  width:100%;height:180px;border-radius:10px;
+  background:rgba(255,255,255,0.05);border:1px solid var(--border-glass);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-muted);font-size:0.85rem;margin-top:1rem;
+}
+.footer-bottom{
+  padding-top:1.5rem;border-top:2px solid var(--gold);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:0.8rem;color:var(--text-muted);
+}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-mobile-toggle{display:block}
+  .pain-grid{grid-template-columns:1fr;gap:2rem}
+  .services-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
+  .process-step{flex:0 0 180px}
+  .section{padding:4rem 1.25rem}
+  .hero-tags{gap:0.4rem}
+  .hero-tag{font-size:0.7rem;padding:0.3rem 0.7rem}
+  .port-banner{height:250px}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr 1fr;gap:1rem}
+}
+
+/* ── Video Section ── */
+.video-section{padding:6rem 2rem;background:var(--blue-dark);position:relative}
+.video-section-inner{max-width:1200px;margin:0 auto}
+.video-label{display:inline-flex;align-items:center;gap:0.5rem;padding:0.35rem 1rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08);margin-bottom:1.5rem}
+.video-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem}
+.video-card{text-align:center}
+.video-card video{width:100%;max-width:1200px;border-radius:12px;border:2px solid rgba(200,150,62,0.3);display:block;margin:0 auto}
+.video-card .video-title{margin-top:0.8rem;font-size:0.9rem;color:var(--text-secondary);font-weight:500}
+.video-full video{width:100%;max-width:1200px;border-radius:12px;border:2px solid rgba(200,150,62,0.3);display:block;margin:0 auto}
+.video-full{position:relative;overflow:hidden;border-radius:12px}
+.video-full-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,29,66,0.3) 0%,rgba(9,29,66,0.15) 50%,rgba(9,29,66,0.3) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;z-index:2}
+.video-full-overlay .section-label{margin-bottom:0.5rem}
+.video-full-overlay h2{font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:800;text-align:center}
+.video-full-overlay p{color:var(--text-secondary);font-size:1rem;margin-top:0.5rem;text-align:center}
+@media(max-width:768px){
+  .video-grid-3{grid-template-columns:1fr}
+}
+
+
+
+</style>
 </head>
 <body>
-  <div id="root"></div>
+
+<!-- Mouse Glow -->
+<div id="mouseGlow"></div>
+
+<!-- Hex Grid Background -->
+<div id="hexGrid"></div>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="logo.png" alt="乾翔衍庆">
+      <span>乾翔关务</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">首页</a></li>
+      <li><a href="tariff.html">关税优化</a></li>
+      <li><a href="ddp.html">DDP贸易</a></li>
+      <li><a href="ior.html">IOR备案</a></li>
+      <li><a href="customs.html">专业清关</a></li>
+      <li><a href="partner.html">渠道合作</a></li>
+      <li><a href="contact.html">联系我们</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">免费咨询</a>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="菜单">&#9776;</button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <button class="nav-mobile-close" id="mobileClose">&times;</button>
+  <a href="index.html">首页</a>
+  <a href="tariff.html">关税优化</a>
+  <a href="ddp.html">DDP贸易</a>
+  <a href="ior.html">IOR备案</a>
+  <a href="customs.html">专业清关</a>
+  <a href="partner.html">渠道合作</a>
+  <a href="contact.html">联系我们</a>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <img class="hero-bg-img" src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=1920" alt="集装箱货轮大海" loading="eager">
+  <div class="hero-overlay"></div>
+  <div id="globe-container"></div>
+  <!-- v3: Mobile static CSS globe fallback -->
+  <div class="mobile-globe">
+    <div class="meridian"></div>
+    <div class="meridian"></div>
+    <div class="meridian"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+  </div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> LIMITLESS EVOLUTION LLC · SDVOSB</div>
+    <h1 class="hero-title" id="heroTitle">乾翔关务</h1>
+    <p style="color:var(--gold);font-size:clamp(0.85rem,1.8vw,1.05rem);font-weight:600;letter-spacing:0.15em;margin-bottom:0.8rem">中美合资 · 合规清关</p>
+    <p class="hero-subtitle" id="heroSubtitle">穿越监管风暴，智赢中美贸易 — 清关+关税减免+仓储一体化服务</p>
+    <div class="hero-tags">
+      <span class="hero-tag">中美关税减免</span>
+      <span class="hero-tag">DDP完税后交货</span>
+      <span class="hero-tag">合规IOR备案</span>
+      <span class="hero-tag">专业清关服务</span>
+    </div>
+    <div class="hero-jv">中美合资企业 — Limitless Evolution LLC (美方 SDVOSB) · 四川乾翔衍庆物流科技 (中方运营)</div>
+    <a href="#contact" class="hero-cta" id="heroCta">立即咨询关税优化方案</a>
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- 7 Qualifications Ticker -->
+<div style="background:var(--blue);padding:1.2rem 0;overflow:hidden;border-bottom:1px solid rgba(200,150,62,0.3);position:relative;z-index:5">
+  <div style="display:flex;gap:3rem;animation:ticker 30s linear infinite;white-space:nowrap;width:max-content" id="qualTicker">
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🛡️ SDVOSB 伤残退伍军人所有企业认证</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🛃 CBP 海关和边境保护局进口商许可</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🚛 DOT 运输部注册 · 货运代理授权</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🔒 BIS 商务部工业与安全局出口许可</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">⚡ DOE 能源部授权 · 能源科技类运输</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🌐 ITA 国际贸易管理局合规企业</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🏛️ SAM.GOV 政府联邦平台名单企业</span>
+    <!-- Duplicate for seamless loop -->
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🛡️ SDVOSB 伤残退伍军人所有企业认证</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🛃 CBP 海关和边境保护局进口商许可</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🚛 DOT 运输部注册 · 货运代理授权</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🔒 BIS 商务部工业与安全局出口许可</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">⚡ DOE 能源部授权 · 能源科技类运输</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🌐 ITA 国际贸易管理局合规企业</span>
+    <span style="display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;border:1px solid rgba(200,150,62,0.4);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);background:rgba(200,150,62,0.08)">🏛️ SAM.GOV 政府联邦平台名单企业</span>
+  </div>
+</div>
+<style>@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+
+</style>
+
+<!-- v7: Real Tariff Comparison Banner -->
+<section style="background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 50%,var(--blue) 100%);padding:3rem 2rem;border-top:1px solid rgba(200,150,62,0.3);border-bottom:1px solid rgba(200,150,62,0.3);position:relative;z-index:5">
+  <div style="max-width:1100px;margin:0 auto;text-align:center">
+    <div style="font-size:0.75rem;font-weight:700;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem">2026 REAL CASE — 能源系统配件</div>
+    <h2 style="font-size:clamp(1.3rem,3vw,2rem);font-weight:800;margin-bottom:1.5rem">真实报价案例：能源系统配件关税<span style="color:var(--gold)">省26%</span></h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:900px;margin:0 auto">
+      <div style="padding:2rem;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:12px;text-align:left">
+        <div style="font-size:0.9rem;color:#fff;margin-bottom:0.3rem;font-weight:700">双极板 EBP/MBP</div>
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:1rem">HS 8507.90.80 | 货值 $30,800</div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <div style="text-align:center">
+            <div style="font-size:1.6rem;font-weight:900;color:rgba(255,255,255,0.4);text-decoration:line-through">38.4%</div>
+            <div style="font-size:0.7rem;color:var(--text-muted)">原始关税</div>
+          </div>
+          <div style="font-size:1.8rem;color:var(--gold)">→</div>
+          <div style="text-align:center">
+            <div style="font-size:1.6rem;font-weight:900;color:var(--gold)">28.4%</div>
+            <div style="font-size:0.7rem;color:var(--gold)">乾翔报价</div>
+          </div>
+        </div>
+        <div style="margin-top:0.6rem;font-size:0.75rem;color:var(--gold);font-weight:600">省26% | MFN 3.4% + S.301 25% + S.122 10%</div>
+      </div>
+      <div style="padding:2rem;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:12px;text-align:left">
+        <div style="font-size:0.9rem;color:#fff;margin-bottom:0.3rem;font-weight:700">碳毡 Carbon Felt</div>
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:1rem">HS 6815.13.00 | 货值 $10,830</div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <div style="text-align:center">
+            <div style="font-size:1.6rem;font-weight:900;color:rgba(255,255,255,0.4);text-decoration:line-through">35%</div>
+            <div style="font-size:0.7rem;color:var(--text-muted)">原始关税</div>
+          </div>
+          <div style="font-size:1.8rem;color:var(--gold)">→</div>
+          <div style="text-align:center">
+            <div style="font-size:1.6rem;font-weight:900;color:var(--gold)">24.8%</div>
+            <div style="font-size:0.7rem;color:var(--gold)">乾翔报价</div>
+          </div>
+        </div>
+        <div style="margin-top:0.6rem;font-size:0.75rem;color:var(--gold);font-weight:600">省29%</div>
+      </div>
+      <div style="padding:2rem;background:linear-gradient(135deg,rgba(200,150,62,0.12),rgba(200,150,62,0.04));border:1px solid rgba(200,150,62,0.4);border-radius:12px;text-align:left">
+        <div style="font-size:0.9rem;color:var(--gold);margin-bottom:0.3rem;font-weight:700">扩大出货预估</div>
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:1rem">货值 $105,600</div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <div style="text-align:center">
+            <div style="font-size:1.3rem;font-weight:900;color:rgba(255,255,255,0.4);text-decoration:line-through">$97,891</div>
+            <div style="font-size:0.7rem;color:var(--text-muted)">原始关税</div>
+          </div>
+          <div style="font-size:1.8rem;color:var(--gold)">→</div>
+          <div style="text-align:center">
+            <div style="font-size:1.3rem;font-weight:900;color:var(--gold)">$68,451</div>
+            <div style="font-size:0.7rem;color:var(--gold)">乾翔打包</div>
+          </div>
+        </div>
+        <div style="margin-top:0.6rem;font-size:0.75rem;color:var(--gold);font-weight:600">省约30%</div>
+      </div>
+    </div>
+    <p style="font-size:0.8rem;color:var(--text-muted);margin-top:1.5rem">报价签发日期：2026年5月25日 | 有效期15天 | 真实数据，合法合规</p>
+  </div>
+</section>
+
+<!-- Pain Point -->
+<section class="section pain" id="pain">
+  <div class="section-inner">
+    <div class="pain-grid">
+      <div class="pain-visual section-reveal">
+        <div class="section-label">关税冲击</div>
+        <div class="pain-number">
+          <span id="painPercent">15</span><span class="stat-suffix">%</span>
+          <div class="label">中国出口美国平均关税</div>
+        </div>
+        <div class="pain-bars">
+          <div>
+            <div class="pain-bar"><div class="pain-bar-fill" data-width="30"></div></div>
+            <div class="pain-bar-label"><span>2018</span><span>15%</span></div>
+          </div>
+          <div>
+            <div class="pain-bar"><div class="pain-bar-fill" data-width="50"></div></div>
+            <div class="pain-bar-label"><span>2022</span><span>25%</span></div>
+          </div>
+          <div>
+            <div class="pain-bar"><div class="pain-bar-fill" data-width="70"></div></div>
+            <div class="pain-bar-label"><span>2024</span><span>35%</span></div>
+          </div>
+          <div>
+            <div class="pain-bar"><div class="pain-bar-fill" data-width="90"></div></div>
+            <div class="pain-bar-label"><span>2025</span><span>45%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pain-text section-reveal section-reveal-delay-2">
+        <div class="section-label">利润告急</div>
+        <h2 class="section-title">每一分关税<br>都在吃掉你的利润</h2>
+        <p style="color:var(--text-secondary);font-size:1.05rem;line-height:1.8">
+          从15%到45%，关税成本飙升三倍。<br>
+          没有专业的关务规划，你的<span class="highlight">利润率正在被一点一点蚕食</span>。<br>
+          乾翔关务，帮你把该省的每一分都省回来。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="section services" id="services">
+  <div class="section-inner">
+    <div class="section-label section-reveal">核心服务</div>
+    <h2 class="section-title section-reveal">四大核心能力<br>守护你的跨境利润</h2>
+    <div class="services-grid">
+      <div class="service-card section-reveal section-reveal-delay-1">
+        <div class="service-card-inner" data-tilt>
+          <img class="service-card-bg" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800" alt="" loading="lazy">
+          <div class="shine"></div>
+          <div class="service-icon">HS</div>
+          <h3>中美关税减免与优化</h3>
+          <p><span class="kw-tooltip">HS<span class="tip-box">HS编码 (Harmonized System)：国际通用的商品分类编码体系，用于确定关税税率和贸易统计。精准的HS编码匹配是关税减免的基础。</span></span>编码精准匹配，覆盖全球2万+编码数据库。基于FTA协定、转运方案、归类策略，量身定制关税优化方案，平均降低成本10%以上。</p>
+        </div>
+      </div>
+      <div class="service-card section-reveal section-reveal-delay-2">
+        <div class="service-card-inner" data-tilt>
+          <img class="service-card-bg" src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800" alt="" loading="lazy">
+          <div class="shine"></div>
+          <div class="service-icon">DDP</div>
+          <h3>DDP贸易（完税后交货）</h3>
+          <p><span class="kw-tooltip">DDP<span class="tip-box">Delivered Duty Paid（完税后交货）：卖方承担将货物运至目的地的一切风险和费用，包括进口关税、增值税等税费。买方无需操心任何进口手续。</span></span>模式，从中国工厂到美国客户门口，全程含税含运费。客户零操心，收货即上架，专注销售不操心物流。</p>
+        </div>
+      </div>
+      <div class="service-card section-reveal section-reveal-delay-3">
+        <div class="service-card-inner" data-tilt>
+          <img class="service-card-bg" src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=800" alt="" loading="lazy">
+          <div class="shine"></div>
+          <div class="service-icon">IOR</div>
+          <h3>合规IOR备案</h3>
+          <p><span class="kw-tooltip">IOR<span class="tip-box">Importer of Record（记录进口商）：合法进口商备案，是美国海关要求的进口主体资质。没有IOR资质的企业无法合法进口货物到美国。</span></span>合法进口商备案服务，帮助企业规避合规风险。确保进口流程合法合规，避免因资质问题导致的货物扣押和罚款。</p>
+        </div>
+      </div>
+      <div class="service-card section-reveal section-reveal-delay-4">
+        <div class="service-card-inner" data-tilt>
+          <img class="service-card-bg" src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800" alt="" loading="lazy">
+          <div class="shine"></div>
+          <div class="service-icon">&#10003;</div>
+          <h3>专业清关一站式服务</h3>
+          <p>中国到美国门到门全程服务，报关、报检、单证审核、港口交付全覆盖。50+口岸网络，确保货物准时高效通关。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Silent Background Videos -->
+
+
+<!-- Port Banner -->
+<div class="port-banner">
+  <img class="port-banner-img" src="https://images.unsplash.com/photo-1494522855154-9297ac14b55f?w=1920" alt="码头集装箱堆场" loading="lazy">
+  <div class="port-banner-overlay">
+    <div class="section-label">全球港口网络</div>
+    <h2>覆盖中美主要港口<br>全程物流可视化</h2>
+    <p>50+口岸无缝衔接，集装箱实时追踪，每一票货物尽在掌握</p>
+  </div>
+</div>
+
+<!-- Why Us -->
+<section class="section why-us" id="why-us">
+  <div class="section-inner">
+    <div class="section-label section-reveal">为什么选择乾翔</div>
+    <h2 class="section-title section-reveal">行业最健全的<br><span style="color:var(--gold)">七大运营资质</span></h2>
+    <p class="section-desc section-reveal">依托美国服务公司持有的联邦级特殊许可证与授权，为国际货运提供合规关税减免与清关服务。</p>
+    <div class="why-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="why-card section-reveal section-reveal-delay-1">
+        <div class="why-card-icon">🛡️</div>
+        <h3>SDVOSB</h3>
+        <p>伤残退伍军人所有企业认证，依据FAR Part 19.14，享受联邦采购关税减免与专属合同机会。2018年正式生效，「祖父条款」保护。</p>
+      </div>
+      <div class="why-card section-reveal section-reveal-delay-2">
+        <div class="why-card-icon">🛃</div>
+        <h3>CBP</h3>
+        <p>海关和边境保护局进口商许可，享受海关优惠关税与清关特权。所有货物依托本公司牌照完成清关申报。</p>
+      </div>
+      <div class="why-card section-reveal section-reveal-delay-3">
+        <div class="why-card-icon">🚛</div>
+        <h3>DOT</h3>
+        <p>运输部注册，货运代理和物流授权。确保国际物流运输合规运营。</p>
+      </div>
+      <div class="why-card section-reveal section-reveal-delay-4">
+        <div class="why-card-icon">🔒</div>
+        <h3>BIS</h3>
+        <p>商务部工业与安全局管制商品出口许可，覆盖军民两用物品出口管制合规。</p>
+      </div>
+      <div class="why-card section-reveal section-reveal-delay-1">
+        <div class="why-card-icon">⚡</div>
+        <h3>DOE</h3>
+        <p>能源部授权，覆盖能源和科技类运输商品的进口合规。</p>
+      </div>
+      <div class="why-card section-reveal section-reveal-delay-2">
+        <div class="why-card-icon">🌐</div>
+        <h3>ITA</h3>
+        <p>国际贸易管理局合规企业，享受《贸易协定法》优惠关税率。</p>
+      </div>
+      <div class="why-card section-reveal section-reveal-delay-3">
+        <div class="why-card-icon">🏛️</div>
+        <h3>SAM.GOV</h3>
+        <p>政府联邦平台名单企业，可查询资质、备案经营品类及特殊许可。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="section process" id="process">
+  <div class="section-inner">
+    <div class="section-label section-reveal">服务流程</div>
+    <h2 class="section-title section-reveal">五步走完<br>从咨询到交付</h2>
+    <p class="section-desc section-reveal">标准化流程 + 专属客户经理一对一跟进，确保每个环节透明可控。</p>
+    <div class="process-track" id="processTrack">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-title">初步咨询</div>
+        <div class="step-desc">了解业务需求<br>评估关税现状</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-title">HS匹配</div>
+        <div class="step-desc">精准编码分类<br>规避归类风险</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-title">关税优化</div>
+        <div class="step-desc">定制优化方案<br>最大化减免空间</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-title">海关清关</div>
+        <div class="step-desc">专业报关报检<br>全流程文件处理</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <div class="step-title">交付完成</div>
+        <div class="step-desc">港口提货交付<br>门到门物流衔接</div>
+      </div>
+    </div>
+    <div class="process-nav" id="processNav"></div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="section stats" id="stats">
+  <video src="videos/qianxiang_v5_scenes/D1.mp4" autoplay muted loop playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;opacity:0.3"></video>
+  <canvas id="statsCanvas"></canvas>
+  <div class="section-inner">
+    <div class="section-label section-reveal">实力数据</div>
+    <h2 class="section-title section-reveal">用数据说话</h2>
+    <p class="section-desc section-reveal">多年来持续为中美跨境企业提供专业关务服务。</p>
+    <div class="stats-grid">
+      <div class="stat-item section-reveal section-reveal-delay-1">
+        <div class="stat-value"><span class="counter" data-target="20">0</span><span class="stat-suffix">%</span></div>
+        <div class="stat-label">平均关税优化幅度</div>
+      </div>
+      <div class="stat-item section-reveal section-reveal-delay-2">
+        <div class="stat-value"><span class="counter" data-target="50">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-label">覆盖清关口岸</div>
+      </div>
+      <div class="stat-item section-reveal section-reveal-delay-3">
+        <div class="stat-value"><span class="counter" data-target="100">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-label">累计服务企业</div>
+      </div>
+      <div class="stat-item section-reveal section-reveal-delay-4">
+        <div class="stat-value"><span class="counter" data-target="1">0</span><span class="stat-suffix">亿</span></div>
+        <div class="stat-label">累计节约成本</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+  <img class="footer-bg" src="https://images.unsplash.com/photo-1569241527972-b8b39e9e8a3b?w=1920" alt="" loading="lazy">
+  <div class="footer-overlay"></div>
+  <canvas id="footerParticles"></canvas>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="margin-bottom:0.5rem">
+          <img src="logo.png" alt="乾翔衍庆" style="height:32px">
+          <span style="font-weight:700;font-size:1rem">乾翔衍庆</span>
+        </a>
+        <p>四川乾翔衍庆物流科技有限公司，中美合资企业，美方 Limitless Evolution LLC 为纯美资 SDVOSB 股东方。专注于中美跨境贸易的关税减免、DDP贸易、IOR备案与专业清关服务，助力企业降本增效。</p>
+      </div>
+      <div>
+        <h4>服务</h4>
+        <ul>
+          <li><a href="tariff.html">中美关税减免</a></li>
+          <li><a href="ddp.html">DDP贸易</a></li>
+          <li><a href="ior.html">合规IOR备案</a></li>
+          <li><a href="customs.html">一站式清关</a></li>
+          <li><a href="partner.html">渠道合作</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>关于</h4>
+        <ul>
+          <li><a href="index.html">公司简介</a></li>
+          <li><a href="tariff.html">关税优化</a></li>
+          <li><a href="ddp.html">DDP贸易</a></li>
+          <li><a href="partner.html">渠道合作</a></li>
+          <li><a href="contact.html">联系我们</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>联系我们</h4>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">&#9742;</span>
+          <span>18228095651（Steven）</span>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">&#9993;</span>
+          <span>Steven@qxyqtech.cn</span>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">&#9873;</span>
+          <span>中国·四川省成都市高新区天府大道北段1700号环球中心E2-1806</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 四川乾翔衍庆物流科技有限公司 QianXiang YanQing Logistics Technology Co., Ltd. All rights reserved.</span>
+      <span>中美合资 — 美方 SDVOSB 股东方 Limitless Evolution · 专业的事，交给乾翔</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════
+   v3: Mouse Glow — gold radial gradient + smooth lerp
+   ═══════════════════════════════════════ */
+(function(){
+  const glow = document.getElementById('mouseGlow');
+  let mx = -500, my = -500, cx = -500, cy = -500;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+  });
+  function tick() {
+    cx += (mx - cx) * 0.06;
+    cy += (my - cy) * 0.06;
+    glow.style.left = cx + 'px';
+    glow.style.top = cy + 'px';
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ═══════════════════════════════════════
+   v3: Hex Grid — slow rotation on scroll
+   ═══════════════════════════════════════ */
+(function(){
+  const grid = document.getElementById('hexGrid');
+  const count = 15;
+  for(let i = 0; i < count; i++){
+    const hex = document.createElement('div');
+    hex.className = 'hex-shape';
+    const size = Math.random() * 80 + 40;
+    hex.style.width = size + 'px';
+    hex.style.height = size + 'px';
+    hex.style.left = Math.random() * 100 + '%';
+    hex.style.top = Math.random() * 100 + '%';
+    hex.style.animationDelay = (Math.random() * 10) + 's';
+    hex.style.animationDuration = (Math.random() * 15 + 15) + 's';
+    grid.appendChild(hex);
+  }
+  let lastScroll = 0;
+  window.addEventListener('scroll', function(){
+    const scrollY = window.pageYOffset;
+    const delta = scrollY * 0.02;
+    grid.style.transform = 'rotate(' + delta + 'deg)';
+    lastScroll = scrollY;
+  }, {passive:true});
+})();
+
+/* ═══════════════════════════════════════
+   v3: Three.js Globe — translucent blue sphere + gold lat/lon lines + particle ring
+   ═══════════════════════════════════════ */
+(function(){
+  if(window.innerWidth <= 768) return;
+  const container = document.getElementById('globe-container');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+  camera.position.z = 4;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(container.offsetWidth, container.offsetHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  container.appendChild(renderer.domElement);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  /* Translucent blue sphere */
+  const sphereGeo = new THREE.SphereGeometry(1.5, 64, 64);
+  const sphereMat = new THREE.MeshPhongMaterial({
+    color: 0x0D2B5E,
+    transparent: true,
+    opacity: 0.45,
+    shininess: 80,
+    side: THREE.FrontSide,
+  });
+  const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+  group.add(sphere);
+
+  /* Gold latitude lines */
+  for(let lat = -60; lat <= 60; lat += 30){
+    const radius = 1.52 * Math.cos(lat * Math.PI / 180);
+    const y = 1.52 * Math.sin(lat * Math.PI / 180);
+    const ringGeo = new THREE.RingGeometry(radius - 0.005, radius + 0.005, 128);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0xC8963E, transparent: true, opacity: 0.5, side: THREE.DoubleSide });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.position.y = y;
+    ring.rotation.x = Math.PI / 2;
+    group.add(ring);
+  }
+
+  /* Gold longitude lines */
+  for(let lon = 0; lon < 360; lon += 30){
+    const curve = new THREE.EllipseCurve(0, 0, 1.52, 1.52, 0, 2 * Math.PI, false, 0);
+    const points = curve.getPoints(128);
+    const geo = new THREE.BufferGeometry().setFromPoints(points.map(p => new THREE.Vector3(p.x, 0, p.y)));
+    const mat = new THREE.LineBasicMaterial({ color: 0xC8963E, transparent: true, opacity: 0.35 });
+    const line = new THREE.Line(geo, mat);
+    line.rotation.y = lon * Math.PI / 180;
+    group.add(line);
+  }
+
+  /* Gold particle ring */
+  const particleCount = 300;
+  const particleGeo = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+  const ringRadius = 2.0;
+  for(let i = 0; i < particleCount; i++){
+    const angle = (i / particleCount) * Math.PI * 2;
+    positions[i * 3] = Math.cos(angle) * ringRadius + (Math.random() - 0.5) * 0.15;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 0.3;
+    positions[i * 3 + 2] = Math.sin(angle) * ringRadius + (Math.random() - 0.5) * 0.15;
+  }
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMat = new THREE.PointsMaterial({ color: 0xC8963E, size: 0.02, transparent: true, opacity: 0.7, sizeAttenuation: true });
+  const particles = new THREE.Points(particleGeo, particleMat);
+  particles.rotation.x = 0.3;
+  group.add(particles);
+
+  /* Lights */
+  const ambientLight = new THREE.AmbientLight(0x4466aa, 0.6);
+  scene.add(ambientLight);
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  dirLight.position.set(3, 2, 4);
+  scene.add(dirLight);
+  const goldLight = new THREE.PointLight(0xC8963E, 0.5, 10);
+  goldLight.position.set(-2, 1, 3);
+  scene.add(goldLight);
+
+  function animate(){
+    requestAnimationFrame(animate);
+    group.rotation.y += 0.003;
+    group.rotation.x = Math.sin(Date.now() * 0.0003) * 0.1;
+    particles.rotation.y += 0.005;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.offsetWidth / container.offsetHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.offsetWidth, container.offsetHeight);
+  });
+})();
+
+/* ═══════════════════════════════════════
+   Particles — Canvas Gold Dust on Deep Blue
+   ═══════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], mouse = {x:-9999,y:-9999};
+  const PARTICLE_COUNT = 80;
+  const MAX_DIST = 120;
+
+  function resize(){
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  class Particle {
+    constructor(){this.reset(true)}
+    reset(init){
+      this.x = Math.random()*W;
+      this.y = init ? Math.random()*H : H+10;
+      this.r = Math.random()*2+0.5;
+      this.vx = (Math.random()-0.5)*0.4;
+      this.vy = (Math.random()-0.5)*0.4 - 0.15;
+      this.alpha = Math.random()*0.5+0.3;
+      this.life = Math.random()*600+200;
+      this.age = init ? Math.random()*this.life : 0;
+    }
+    update(){
+      this.x += this.vx;
+      this.y += this.vy;
+      this.age++;
+      if(this.age > this.life || this.x<-20 || this.x>W+20 || this.y<-20 || this.y>H+20){
+        this.reset(false);
+      }
+      const dx = mouse.x - this.x, dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+      if(dist < 150){
+        this.vx -= dx*0.0001;
+        this.vy -= dy*0.0001;
+      }
+    }
+    draw(){
+      const fade = 1 - this.age/this.life;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(200,150,62,'+this.alpha*fade+')';
+      ctx.fill();
+    }
+  }
+
+  for(let i=0;i<PARTICLE_COUNT;i++) particles.push(new Particle());
+
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x;
+        const dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<MAX_DIST){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle='rgba(200,150,62,'+0.12*(1-dist/MAX_DIST)+')';
+          ctx.lineWidth=0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    particles.forEach(function(p){p.update();p.draw()});
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  canvas.addEventListener('mousemove',function(e){
+    var rect=canvas.getBoundingClientRect();
+    mouse.x=e.clientX-rect.left;
+    mouse.y=e.clientY-rect.top;
+  });
+  canvas.addEventListener('mouseleave',function(){mouse.x=-9999;mouse.y=-9999});
+})();
+
+/* ═══════════════════════════════════════
+   Stats Canvas Particles
+   ═══════════════════════════════════════ */
+(function(){
+  var canvas = document.getElementById('statsCanvas');
+  var ctx = canvas.getContext('2d');
+  var W, H, pts = [];
+
+  function resize(){
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function StatParticle(){this.reset()}
+  StatParticle.prototype.reset = function(){
+    this.x = Math.random()*W;
+    this.y = Math.random()*H;
+    this.r = Math.random()*1.5+0.3;
+    this.vx = (Math.random()-0.5)*0.3;
+    this.vy = -Math.random()*0.5-0.1;
+    this.alpha = Math.random()*0.4+0.1;
+    this.life = Math.random()*400+100;
+    this.age = Math.random()*this.life;
+  };
+  StatParticle.prototype.update = function(){
+    this.x += this.vx;
+    this.y += this.vy;
+    this.age++;
+    if(this.age > this.life || this.y < -10) this.reset();
+  };
+  StatParticle.prototype.draw = function(){
+    var fade = Math.sin(Math.PI * this.age / this.life);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(200,150,62,'+this.alpha*fade+')';
+    ctx.fill();
+  };
+
+  for(var i=0;i<50;i++) pts.push(new StatParticle());
+
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){p.update();p.draw()});
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* ═══════════════════════════════════════
+   v3: Footer — upward floating gold particles
+   ═══════════════════════════════════════ */
+(function(){
+  var canvas = document.getElementById('footerParticles');
+  var ctx = canvas.getContext('2d');
+  var W, H, pts = [];
+
+  function resize(){
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function FP(){this.reset()}
+  FP.prototype.reset = function(){
+    this.x = Math.random()*W;
+    this.y = H + Math.random()*20;
+    this.r = Math.random()*2 + 0.5;
+    this.vx = (Math.random()-0.5)*0.3;
+    this.vy = -Math.random()*0.6 - 0.2;
+    this.alpha = Math.random()*0.6 + 0.2;
+    this.life = Math.random()*300 + 100;
+    this.age = 0;
+  };
+  FP.prototype.update = function(){
+    this.x += this.vx;
+    this.y += this.vy;
+    this.age++;
+    if(this.age > this.life || this.y < -10) this.reset();
+  };
+  FP.prototype.draw = function(){
+    var fade = Math.sin(Math.PI * this.age / this.life);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(200,150,62,'+this.alpha*fade+')';
+    ctx.fill();
+  };
+
+  for(var i=0;i<40;i++) pts.push(new FP());
+
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){p.update();p.draw()});
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* ═══════════════════════════════════════
+   GSAP Setup
+   ═══════════════════════════════════════ */
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── Progress Bar ── */
+gsap.to('#progressBar',{
+  width:'100%',
+  ease:'none',
+  scrollTrigger:{trigger:'body',start:'top top',end:'bottom bottom',scrub:0.3}
+});
+
+/* ── v3: Nav frosted glass + gold border on scroll ── */
+window.addEventListener('scroll',function(){
+  var nav = document.getElementById('nav');
+  if(window.pageYOffset > 100){
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+},{passive:true});
+
+/* ── Hero Parallax Scroll ── */
+(function(){
+  var heroImg = document.querySelector('.hero-bg-img');
+  if(!heroImg) return;
+  window.addEventListener('scroll',function(){
+    var scrollY = window.pageYOffset;
+    var heroH = document.querySelector('.hero').offsetHeight;
+    if(scrollY < heroH){
+      heroImg.style.transform = 'translateY(' + (scrollY * 0.35) + 'px) scale(1.05)';
+    }
+  },{passive:true});
+})();
+
+/* ── Hero Title Char Animation ── */
+(function(){
+  var title = document.getElementById('heroTitle');
+  var text = title.textContent;
+  title.innerHTML = '';
+  var chars = text.split('');
+  chars.forEach(function(ch,i){
+    var span = document.createElement('span');
+    span.className='char';
+    span.textContent=ch;
+    title.appendChild(span);
+  });
+  gsap.to('.hero .char',{
+    opacity:1,y:0,duration:0.6,stagger:0.06,
+    delay:0.5,
+    ease:'power3.out'
+  });
+  gsap.set('.hero .char',{y:30,opacity:0});
+
+  gsap.from('#heroSubtitle',{opacity:0,y:20,duration:0.8,delay:1.2,ease:'power3.out'});
+  gsap.from('.hero-tags',{opacity:0,y:20,duration:0.8,delay:1.5,ease:'power3.out'});
+  gsap.from('.hero-jv',{opacity:0,y:20,duration:0.8,delay:1.7,ease:'power3.out'});
+  gsap.from('#heroCta',{opacity:0,y:20,duration:0.8,delay:1.9,ease:'power3.out'});
+})();
+
+/* ── Section Reveal with GSAP ScrollTrigger ── */
+document.querySelectorAll('.section-reveal').forEach(function(el) {
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 88%',
+    onEnter: function(){ el.classList.add('active') },
+    once: true
+  });
+});
+
+/* ── Pain Number Count Up ── */
+(function(){
+  var el = document.getElementById('painPercent');
+  var vals = [15,25,35,45];
+  var idx = 0;
+  ScrollTrigger.create({
+    trigger:'#pain',
+    start:'top 60%',
+    once:true,
+    onEnter:function(){
+      document.querySelectorAll('.pain-bar-fill').forEach(function(bar){
+        bar.style.width = bar.dataset.width+'%';
+      });
+      function step(){
+        if(idx>=vals.length) return;
+        var target = vals[idx];
+        var start = parseInt(el.textContent)||0;
+        var dur = 600;
+        var startTime = performance.now();
+        function tick(now){
+          var p = Math.min((now-startTime)/dur,1);
+          var ease = 1-Math.pow(1-p,3);
+          el.textContent = Math.round(start+(target-start)*ease);
+          if(p<1) requestAnimationFrame(tick);
+          else{ idx++; setTimeout(step,300)}
+        }
+        requestAnimationFrame(tick);
+      }
+      step();
+    }
+  });
+})();
+
+/* ── Service Card 3D Tilt ── */
+document.querySelectorAll('[data-tilt]').forEach(function(card){
+  card.addEventListener('mousemove',function(e){
+    var rect=card.getBoundingClientRect();
+    var x=(e.clientX-rect.left)/rect.width-0.5;
+    var y=(e.clientY-rect.top)/rect.height-0.5;
+    card.style.transform='rotateY('+x*12+'deg) rotateX('+-y*12+'deg) scale(1.02)';
+  });
+  card.addEventListener('mouseleave',function(){
+    card.style.transform='rotateY(0) rotateX(0) scale(1)';
+  });
+});
+
+/* ── Process Horizontal Scroll ── */
+(function(){
+  var track = document.getElementById('processTrack');
+  var steps = track.querySelectorAll('.process-step');
+  var nav = document.getElementById('processNav');
+
+  steps.forEach(function(_,i){
+    var dot=document.createElement('button');
+    dot.className='process-dot';
+    dot.addEventListener('click',function(){
+      steps[i].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+    });
+    nav.appendChild(dot);
+  });
+  var dots=nav.querySelectorAll('.process-dot');
+
+  function updateProcess(){
+    var trackRect=track.getBoundingClientRect();
+    var trackCenter=trackRect.left+trackRect.width/2;
+    var closest=0;
+    var closestDist=Infinity;
+    steps.forEach(function(s,i){
+      var r=s.getBoundingClientRect();
+      var center=r.left+r.width/2;
+      var dist=Math.abs(center-trackCenter);
+      if(dist<closestDist){closestDist=dist;closest=i}
+    });
+    steps.forEach(function(s,i){s.classList.toggle('revealed',i<=closest)});
+    dots.forEach(function(d,i){d.classList.toggle('active',i===closest)});
+  }
+  track.addEventListener('scroll',updateProcess,{passive:true});
+  setTimeout(updateProcess,500);
+})();
+
+/* ── v3: Counter Animation with digit flip effect ── */
+(function(){
+  var counters=document.querySelectorAll('.counter');
+  function animateCounter(el){
+    var target=parseInt(el.dataset.target);
+    var duration=2000;
+    var startTime=performance.now();
+    var start=0;
+    var lastValue = 0;
+    function tick(now){
+      var p=Math.min((now-startTime)/duration,1);
+      var ease=1-Math.pow(1-p,4);
+      var current=Math.round(start+(target-start)*ease);
+      if(current !== lastValue){
+        el.textContent=current;
+        el.classList.remove('flip');
+        void el.offsetWidth;
+        el.classList.add('flip');
+        lastValue = current;
+      }
+      if(p<1) requestAnimationFrame(tick);
+      else el.textContent=target;
+    }
+    requestAnimationFrame(tick);
+  }
+  counters.forEach(function(c){
+    ScrollTrigger.create({
+      trigger:c,
+      start:'top 80%',
+      once:true,
+      onEnter:function(){animateCounter(c)}
+    });
+  });
+})();
+
+/* ── Smooth Scroll for anchor links ── */
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    var target=document.querySelector(a.getAttribute('href'));
+    if(target) target.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+/* ── IntersectionObserver Lazy Loading for Non-Hero Images ── */
+(function(){
+  var lazyImages = document.querySelectorAll('img[loading="lazy"]');
+  if ('IntersectionObserver' in window) {
+    var imageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var img = entry.target;
+          img.classList.add('loaded');
+          observer.unobserve(img);
+        }
+      });
+    }, {
+      rootMargin: '100px 0px',
+      threshold: 0.01
+    });
+    lazyImages.forEach(function(img) {
+      imageObserver.observe(img);
+    });
+  }
+})();
+</script>
+<script>
+(function(){
+  var menu=document.getElementById('mobileMenu');
+  var toggle=document.getElementById('mobileToggle');
+  var close=document.getElementById('mobileClose');
+  function openMenu(){menu.classList.add('active')}
+  function closeMenu(){menu.classList.remove('active')}
+  toggle.addEventListener('click',openMenu);
+  close.addEventListener('click',closeMenu);
+  toggle.addEventListener('touchstart',function(e){e.preventDefault();openMenu()},{passive:false});
+  close.addEventListener('touchstart',function(e){e.preventDefault();closeMenu()},{passive:false});
+  var links=menu.querySelectorAll('a');
+  for(var i=0;i<links.length;i++){
+    links[i].addEventListener('click',closeMenu);
+    links[i].addEventListener('touchstart',closeMenu);
+  }
+})();
+</script>
 </body>
 </html>

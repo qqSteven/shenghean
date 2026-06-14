@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关税优化 - 乾翔关务</title>
+<meta name="description" content="乾翔关务提供HS编码精准匹配、关税减免方案定制，帮助企业平均降低关税成本10%以上。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#0D2B5E;--blue-dark:#091D42;--blue-light:#163A75;
+  --white:#FFFFFF;--gold:#C8963E;--gold-light:#D4A94F;--gold-dark:#A87A2E;
+  --text-primary:#F0F0F0;--text-secondary:rgba(255,255,255,0.7);--text-muted:rgba(255,255,255,0.5);
+  --border-glass:rgba(255,255,255,0.1);
+}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:'Inter','Geist','SF Pro Display','PingFang SC','Microsoft YaHei',system-ui,sans-serif;background:var(--blue-dark);color:var(--text-primary);line-height:1.7;font-size:16px;overflow-x:hidden}
+img{max-width:100%;display:block}
+
+#mouseGlow{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:9998;background:radial-gradient(circle,rgba(200,150,62,0.20) 0%,rgba(200,150,62,0.08) 30%,rgba(200,150,62,0.02) 55%,transparent 70%);transform:translate(-50%,-50%);transition:opacity 0.3s;opacity:0;will-change:left,top;filter:blur(2px)}
+body:hover #mouseGlow{opacity:1}
+
+#hexGrid{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.06;transition:transform 0.1s linear}
+.hex-shape{position:absolute;border:1px solid var(--gold);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:hexFloat 20s infinite ease-in-out}
+@keyframes hexFloat{0%,100%{transform:translateY(0) rotate(0deg);opacity:0.3}50%{transform:translateY(-20px) rotate(30deg);opacity:0.6}}
+
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:9999;width:0;will-change:width}
+
+.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1rem 2rem;background:rgba(9,29,66,0.3);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);border-bottom:1px solid transparent;transition:all 0.5s cubic-bezier(0.16,1,0.3,1)}
+.nav.scrolled{background:rgba(9,29,66,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(200,150,62,0.4);box-shadow:0 4px 30px rgba(0,0,0,0.25),0 1px 0 rgba(200,150,62,0.2)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:var(--white)}
+.nav-logo img{height:40px;width:auto;filter:drop-shadow(0 0 8px rgba(200,150,62,0.6))}
+.nav-logo span{font-weight:700;font-size:1.1rem;letter-spacing:0.02em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width 0.3s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active{color:var(--white)}
+.nav-links a.active::after{width:100%}
+.nav-cta{padding:0.5rem 1.25rem;background:var(--gold);color:var(--blue);border:none;border-radius:6px;font-weight:600;font-size:0.85rem;cursor:pointer;text-decoration:none;transition:transform 0.2s,background 0.3s}
+.nav-cta:hover{background:var(--gold-light);transform:translateY(-1px)}
+.nav-mobile-toggle{display:none;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer}
+.nav-mobile-menu{display:none;position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(9,29,66,0.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.nav-mobile-menu.active{display:flex}
+.nav-mobile-menu a{color:var(--white);font-size:1.8rem;font-weight:600;text-decoration:none;padding:0.8rem 2rem;min-height:48px;display:flex;align-items:center;justify-content:center}
+.nav-mobile-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--white);font-size:2rem;cursor:pointer}
+
+.page-hero{position:relative;width:100%;min-height:60vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--blue);padding-top:80px}
+.page-hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(180deg,rgba(9,29,66,0.9) 0%,rgba(13,43,94,0.75) 50%,rgba(9,29,66,0.95) 100%)}
+#hero-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2}
+.page-hero-content{position:relative;z-index:3;text-align:center;padding:2rem;max-width:800px}
+.page-hero-badge{display:inline-flex;align-items:center;gap:0.6rem;padding:0.5rem 1.5rem;margin-bottom:1.5rem;border:1px solid var(--gold);border-radius:999px;font-size:0.8rem;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase}
+.page-hero-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1;margin-bottom:1rem;letter-spacing:-0.02em}
+.page-hero-title .gold{color:var(--gold)}
+.page-hero-subtitle{font-size:clamp(0.95rem,2vw,1.2rem);color:var(--text-secondary);font-weight:400;line-height:1.6}
+
+.section{padding:5rem 2rem;position:relative}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-size:0.75rem;font-weight:700;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem}
+.section-title{font-size:clamp(1.8rem,4vw,2.2rem);font-weight:800;line-height:1.2;margin-bottom:1rem;border-bottom:3px solid var(--gold);display:inline-block;padding-bottom:0.3rem}
+.section-desc{font-size:1.05rem;color:var(--text-secondary);max-width:600px;margin-bottom:3rem;line-height:1.8}
+
+.section-reveal{opacity:1;transform:translateY(0);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1)}
+.section-reveal.active{opacity:1;transform:translateY(0)}
+.section-reveal-delay-1{transition-delay:0.1s}
+.section-reveal-delay-2{transition-delay:0.2s}
+.section-reveal-delay-3{transition-delay:0.3s}
+.section-reveal-delay-4{transition-delay:0.4s}
+
+.content-block{background:var(--blue);margin-bottom:0;display:block}
+
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.content-grid.reverse{direction:rtl}
+.content-grid.reverse>*{direction:ltr}
+.content-text h3{font-size:1.5rem;font-weight:700;margin-bottom:1rem;color:var(--text-primary)}
+.content-text p{color:#e2e8f0;line-height:2.0;margin-bottom:1rem}
+.content-text .highlight{color:var(--gold);font-weight:700}
+
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem}
+.feature-list li{display:flex;align-items:flex-start;gap:0.75rem;color:var(--text-secondary);line-height:1.6}
+.feature-list .icon{width:28px;height:28px;border-radius:8px;background:rgba(200,150-62,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.85rem;color:var(--gold);font-weight:700;margin-top:2px}
+.feature-list .icon{background:rgba(200,150,62,0.15)}
+
+.info-card{padding:2rem;background:rgba(255,255,255,0.04);border:1px solid var(--border-glass);border-radius:16px;margin-bottom:1.5rem;transition:border-color 0.3s,transform 0.3s}
+.info-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.info-card h4{font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;color:var(--gold)}
+.info-card p{font-size:0.95rem;color:#cbd5e0;line-height:1.7}
+
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:center;padding:4rem 0}
+.stat-item{padding:1.5rem}
+.stat-value{font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--gold);line-height:1;margin-bottom:0.5rem}
+.stat-label{font-size:0.9rem;color:var(--text-secondary)}
+
+.cta-banner{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%);border:1px solid rgba(200,150,62,0.3);border-radius:20px;padding:4rem 2rem;text-align:center;margin:4rem 0}
+.cta-banner h3{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;margin-bottom:1rem}
+.cta-banner p{color:var(--text-secondary);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-block;padding:1rem 2.5rem;background:var(--gold);color:var(--blue);font-size:1.1rem;font-weight:700;border:none;border-radius:8px;cursor:pointer;text-decoration:none;transition:transform 0.25s,box-shadow 0.3s;box-shadow:0 4px 24px rgba(200,150,62,0.3)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(200,150,62,0.45)}
+
+.footer{background:var(--blue);padding:4rem 2rem 2rem;border-top:1px solid var(--border-glass);position:relative;overflow:hidden}
+.footer-overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(9,29,66,0.8) 0%,rgba(9,29,66,0.95) 100%)}
+#footerParticles{position:absolute;bottom:0;left:0;width:100%;height:200px;pointer-events:none;z-index:1}
+.footer-inner{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem}
+.footer-brand p{color:var(--text-secondary);font-size:0.9rem;margin-top:1rem;line-height:1.7}
+.footer h4{font-size:0.95rem;font-weight:700;margin-bottom:1rem;color:var(--gold)}
+.footer ul{list-style:none}
+.footer li{margin-bottom:0.6rem}
+.footer a{color:var(--text-secondary);text-decoration:none;font-size:0.9rem;transition:color 0.3s}
+.footer a:hover{color:var(--gold)}
+.footer-contact-item{display:flex;gap:0.6rem;align-items:flex-start;margin-bottom:0.8rem;font-size:0.9rem;color:var(--text-secondary)}
+.footer-contact-icon{color:var(--gold);font-weight:700;min-width:16px}
+.footer-bottom{padding-top:1.5rem;border-top:2px solid var(--gold);display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;color:var(--text-muted)}
+
+/* ── Video Section ── */
+.video-section{padding:0;position:relative;overflow:hidden}
+.video-full{position:relative;overflow:hidden}
+.video-full video{width:100%;display:block;border:none;border-radius:0}
+.video-full-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,29,66,0.4) 0%,rgba(9,29,66,0.15) 50%,rgba(9,29,66,0.4) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;z-index:2}
+.video-full-overlay .section-label{margin-bottom:0.5rem}
+.video-full-overlay h2{font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:800;text-align:center}
+.video-full-overlay p{color:var(--text-secondary);font-size:1rem;margin-top:0.5rem;text-align:center}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-mobile-toggle{display:block}
+  .content-grid{grid-template-columns:1fr;gap:2rem}
+  .content-grid.reverse{direction:ltr}
+  .stats-row{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
+  .section{padding:4rem 1.25rem}
+  }
+.compare-table{width:100%;border-collapse:collapse;margin:1rem 0}
+.compare-table thead{background:rgba(200,150,62,0.15)}
+.compare-table th{padding:0.9rem 0.75rem;text-align:left;font-size:0.75rem;font-weight:700;color:var(--gold);letter-spacing:0.05em;text-transform:uppercase;border-bottom:2px solid rgba(200,150,62,0.3)}
+.compare-table td{padding:0.85rem 0.75rem;font-size:0.85rem;border-bottom:1px solid rgba(255,255,255,0.05)}
+.compare-table tbody tr:nth-child(even){background:rgba(255,255,255,0.02)}
+.compare-table tbody tr:hover{background:rgba(200,150,62,0.06)}
+
+
+.bg-pattern{position:relative}
+.bg-pattern::before{content:'';position:absolute;inset:0;background:url(images/tariff_hero.svg') center/cover no-repeat;opacity:0.06;z-index:0;pointer-events:none}
+.bg-pattern .section-inner{position:relative;z-index:1}
+.bg-gradient{background:linear-gradient(180deg,rgba(200,150,62,0.04) 0%,transparent 50%,rgba(200,150,62,0.04) 100%)}
+
+
+.cat-card{position:relative;overflow:hidden}
+.cat-card::before{content:'';position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.06;z-index:0;transition:opacity .4s}
+.cat-card:hover::before{opacity:0.13}
+.cat-card>*{position:relative;z-index:1}
+.cat-chem::before{background-image:url(images/chem_bg.svg)}
+.cat-elec::before{background-image:url(images/elec_bg.svg)}
+.cat-energy::before{background-image:url(images/energy_bg.svg)}
+.cat-mach::before{background-image:url(images/mach_bg.svg)}
+.cat-food::before{background-image:url(images/food_bg.svg)}
+</style>
+</head>
+<body>
+<div id="mouseGlow"></div>
+<div id="hexGrid"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="乾翔衍庆">
+      <span>乾翔关务</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="tariff.html" class="active">关税优化</a></li>
+      <li><a href="ddp.html">DDP贸易</a></li>
+      <li><a href="ior.html">IOR备案</a></li>
+      <li><a href="customs.html">专业清关</a></li>
+      <li><a href="partner.html">渠道合作</a></li>
+      <li><a href="contact.html">联系我们</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">免费咨询</a>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="菜单">&#9776;</button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="mobileMenu">
+  <button class="nav-mobile-close" id="mobileClose">&times;</button>
+  <a href="index.html">首页</a>
+  <a href="tariff.html">关税优化</a>
+  <a href="ddp.html">DDP贸易</a>
+  <a href="ior.html">IOR备案</a>
+  <a href="customs.html">专业清关</a>
+  <a href="partner.html">渠道合作</a>
+  <a href="contact.html">联系我们</a>
+</div>
+
+<section class="page-hero" style="min-height:70vh">
+  <video src="videos/qianxiang_v5_scenes/A3.mp4" autoplay muted loop playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0"></video>
+  <div class="page-hero-overlay" style="z-index:1"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="page-hero-content">
+    <div class="page-hero-badge">TARIFF OPTIMIZATION</div>
+    <h1 class="page-hero-title">穿越监管风暴<br><span class="gold">智赢中美贸易</span></h1>
+    <p class="page-hero-subtitle">依托特殊资质，为您优化关税，让您清关无忧 — HS编码精准匹配 / 关税减免方案定制</p>
+  </div>
+</section>
+
+
+
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="content-grid">
+      <div class="content-text section-reveal">
+        <div class="section-label">关税优化</div>
+        <h3>平均节约关税成本约<span class="highlight">20%</span></h3>
+        <p>依托美国合作方Limitless Evolution的SDVOSB/CBP等特殊许可证以及合法的关税优化策略，我们能够从根本上降低进口关税成本。</p>
+        <p>通过<span class="highlight">HS编码精准匹配、FTA协定利用、归类策略优化</span>等多维度手段，在合法框架内实现关税成本显著降低。</p>
+        <ul class="feature-list">
+          <li><span class="icon">&#10003;</span>基于SDVOSB/CBP特殊许可证合法减税</li>
+          <li><span class="icon">&#10003;</span>2万+编码数据库精准归类</li>
+          <li><span class="icon">&#10003;</span>FTA协定利用（RCEP、USMCA等）</li>
+          <li><span class="icon">&#10003;</span>全程合规申报通过率100%</li>
+        </ul>
+      </div>
+      <div class="section-reveal section-reveal-delay-2">
+        <div class="info-card">
+          <h4>为什么能省这么多</h4>
+          <p>传统货代依赖查验率博弈或低报货值来压低关税，风险极高且不合规。乾翔依托 Limitless Evolution 的真实美国 SDVOSB/CBP 特殊资质，通过合法归类优化、FTA 协定利用、301条款豁免等正规手段降低关税成本，全程在 ACE 系统合规申报，记录永久可查。</p>
+        </div>
+        <div class="info-card">
+          <h4>合法合规保障</h4>
+          <p>所有优化方案均在美国海关ACE系统下合法申报，流程透明可查，记录永久留存。华盛顿特区精品律所Mark Barnes & Associates出具法律意见书背书。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section content-block-alt">
+  <div class="section-inner">
+    <div class="section-label section-reveal">成功案例</div>
+    <h2 class="section-title section-reveal">多品类关税优化<span style="color:var(--gold)">真实成果</span></h2>
+    <p class="section-desc section-reveal">全程合规申报通过率100%，平均关税节约约20%。</p>
+    <div class="section-reveal section-reveal-delay-1" style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr><th>产品品类</th><th>海关编码</th><th>减免前</th><th>减免后</th><th>节约</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>钢制模块化单元</td><td>9406.20</td><td>40%</td><td style="color:var(--gold);font-weight:700">32%</td><td style="color:var(--gold);font-weight:700">约20%</td></tr>
+          <tr><td>双极板 EBP/MBP</td><td>8507.90.80</td><td>38.4%</td><td style="color:var(--gold);font-weight:700">30.7%</td><td style="color:var(--gold);font-weight:700">约20%</td></tr>
+          <tr><td>碳毡 Carbon Felt</td><td>6815.13.00</td><td>35%</td><td style="color:var(--gold);font-weight:700">28%</td><td style="color:var(--gold);font-weight:700">约20%</td></tr>
+          <tr><td>肽类化工产品</td><td>2933.99.79</td><td>35%</td><td style="color:var(--gold);font-weight:700">28%</td><td style="color:var(--gold);font-weight:700">约20%</td></tr>
+          <tr><td>鱼油类产品</td><td>1504.10</td><td>37.9%</td><td style="color:var(--gold);font-weight:700">30.3%</td><td style="color:var(--gold);font-weight:700">约20%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2rem" class="section-reveal section-reveal-delay-2">
+      <div style="text-align:center;padding:1.5rem">
+        <div style="font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--gold)">20%+</div>
+        <div style="font-size:0.9rem;color:var(--text-secondary)">全品类平均关税节约</div>
+      </div>
+      <div style="text-align:center;padding:1.5rem">
+        <div style="font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--gold)">20%</div>
+        <div style="font-size:0.9rem;color:var(--text-secondary)">核心品类节约幅度</div>
+      </div>
+      <div style="text-align:center;padding:1.5rem">
+        <div style="font-size:clamp(2rem,4vw,3rem);font-weight:900;color:var(--gold)">100%</div>
+        <div style="font-size:0.9rem;color:var(--text-secondary)">全程合规申报通过率</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Peptide Product Case Study -->
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="section-label section-reveal">案例详解</div>
+    <h2 class="section-title section-reveal">肽类产品跨境运输<span style="color:var(--gold)">(2025)</span></h2>
+    <div class="content-grid">
+      <div class="section-reveal">
+        <div class="info-card">
+          <h4>项目基础信息</h4>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:0.4rem;font-size:0.9rem;color:var(--text-secondary);margin-top:0.5rem">
+            <li>📦 产品品类：肽类化工产品</li>
+            <li>🏷️ HS海关编码：2933.99.79</li>
+            <li>🚚 全程运输路线：香港 → 密苏里仓库中转 → 迈阿密客户</li>
+            <li>💰 申报货物价值：$75,890 USD</li>
+            <li>✈️ 指定承运商：汉莎货运航空</li>
+            <li>📋 货运提单号：020-21401122</li>
+          </ul>
+        </div>
+      </div>
+      <div class="section-reveal section-reveal-delay-2">
+        <div class="info-card">
+          <h4>合规优化核心成效</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
+            <div style="text-align:center;padding:1rem;background:rgba(200,150,62,0.08);border-radius:10px">
+              <div style="font-size:1.8rem;font-weight:900;color:var(--gold)">35%→19%</div>
+              <div style="font-size:0.8rem;color:var(--text-secondary)">综合税率降幅</div>
+            </div>
+            <div style="text-align:center;padding:1rem;background:rgba(200,150,62,0.08);border-radius:10px">
+              <div style="font-size:1.8rem;font-weight:900;color:var(--gold)">$12,106</div>
+              <div style="font-size:0.8rem;color:var(--text-secondary)">直接关税减免</div>
+            </div>
+            <div style="text-align:center;padding:1rem;background:rgba(200,150,62,0.08);border-radius:10px">
+              <div style="font-size:1.8rem;font-weight:900;color:var(--gold)">$4,237</div>
+              <div style="font-size:0.8rem;color:var(--text-secondary)">专项服务成本</div>
+            </div>
+            <div style="text-align:center;padding:1rem;background:rgba(200,150,62,0.08);border-radius:10px">
+              <div style="font-size:1.8rem;font-weight:900;color:var(--gold)">$8,000+</div>
+              <div style="font-size:0.8rem;color:var(--text-secondary)">客户净节省收益</div>
+            </div>
+          </div>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-top:1rem;text-align:center">全程在美国海关ACE系统下合法申报，流程透明可查，记录永久留存，合规率100%</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- v7: Real Tariff Data -->
+<section class="section content-block-alt">
+  <div class="section-inner">
+    <h2 class="section-title section-reveal">能源系统配件关税<span style="color:var(--gold)">优化报价</span></h2>
+    <p class="section-desc section-reveal">报价签发日期：2026年5月25日，有效期15天。以下为真实数据，乾翔打包关税率已包含全部合规成本。</p>
+    <div class="section-reveal section-reveal-delay-1" style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr><th>产品</th><th>HS编码</th><th>货值</th><th>原始关税率</th><th>乾翔打包率</th><th>节省</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>双极板 EBP/MBP</strong></td>
+            <td>8507.90.80</td>
+            <td>$30,800</td>
+            <td style="color:rgba(255,255,255,0.5);text-decoration:line-through">38.4%</td>
+            <td style="color:var(--gold);font-weight:700">28.4%</td>
+            <td style="color:var(--gold);font-weight:700">省26%</td>
+          </tr>
+          <tr>
+            <td><strong>碳毡 Carbon Felt</strong></td>
+            <td>6815.13.00</td>
+            <td>$10,830</td>
+            <td style="color:rgba(255,255,255,0.5);text-decoration:line-through">35%</td>
+            <td style="color:var(--gold);font-weight:700">24.8%</td>
+            <td style="color:var(--gold);font-weight:700">省29%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:1.5rem;padding:1.5rem;background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.3);border-radius:12px" class="section-reveal section-reveal-delay-2">
+      <h4 style="color:var(--gold);font-weight:700;margin-bottom:0.5rem">原始关税率构成（双极板）</h4>
+      <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.8">MFN税率 3.4% + S.301条款 25% + S.122条款 10% = 原始 38.4%<br>乾翔打包优化后 30.7%，节约幅度 约20%</p>
+    </div>
+    <div style="margin-top:1.5rem;padding:1.5rem;background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.3);border-radius:12px" class="section-reveal section-reveal-delay-3">
+      <h4 style="color:var(--gold);font-weight:700;margin-bottom:0.5rem">扩大出货预估</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:0.8rem">
+        <div style="text-align:center;padding:1rem;background:rgba(255,255,255,0.04);border-radius:8px">
+          <div style="font-size:1.5rem;font-weight:900;color:var(--gold)">$105,600</div>
+          <div style="font-size:0.8rem;color:var(--text-muted)">预估货值</div>
+        </div>
+        <div style="text-align:center;padding:1rem;background:rgba(255,255,255,0.04);border-radius:8px">
+          <div style="font-size:1.5rem;font-weight:900;color:rgba(255,255,255,0.4);text-decoration:line-through">$97,891</div>
+          <div style="font-size:0.8rem;color:var(--text-muted)">原始关税</div>
+        </div>
+        <div style="text-align:center;padding:1rem;background:rgba(200,150,62,0.12);border-radius:8px">
+          <div style="font-size:1.5rem;font-weight:900;color:var(--gold)">$68,451</div>
+          <div style="font-size:0.8rem;color:var(--gold)">乾翔打包价（省约30%）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="cta-banner section-reveal">
+      <h3>关税成本居高不下？</h3>
+      <p>免费获取关税优化评估报告，了解您的产品可以节省多少关税成本。</p>
+      <a href="contact.html" class="cta-btn">获取免费评估</a>
+    </div>
+  </div>
+</section>
+
+<!-- SDVOSB Qualification & Tariff Engineering -->
+<section class="section content-block-alt">
+  <div class="section-inner">
+    <div class="section-label section-reveal">核心优势</div>
+    <h2 class="section-title section-reveal">SDVOSB资质如何<span style="color:var(--gold)">合法降关税</span></h2>
+    <p class="section-desc section-reveal">依托美国服务公司持有的联邦级特殊许可证，通过合法合规框架实现关税大幅减免。</p>
+    <div class="content-grid">
+      <div class="content-text section-reveal">
+        <h3>基于FAR联邦采购法规的合规减税</h3>
+        <p>SDVOSB（Service-Disabled Veteran-Owned Small Business）是经联邦政府认可的伤残退伍军人所有小型企业资质。依据<span class="highlight">《联邦采购条例》第19.14部分</span>，该资质为企业提供以下关税减免优惠：</p>
+        <ul class="feature-list">
+          <li><span class="icon">&#10003;</span>政府采购方面：有资格参与SDVOSB专属合同的政府采购</li>
+          <li><span class="icon">&#10003;</span>关税与进口方面：通过联邦采购优惠政策享受关税减免和进口福利</li>
+          <li><span class="icon">&#10003;</span>贸易与海关方面：为授权的国防和商业商品提供快速贸易和海关处理服务</li>
+          <li><span class="icon">&#10003;</span>GSA许可：允许访问联邦供应时间表，使获批商业进口商品享受关税减免</li>
+        </ul>
+      </div>
+      <div class="section-reveal section-reveal-delay-2">
+        <div class="info-card">
+          <h4>关税工程方法论</h4>
+          <p>关税工程基于两大长期原则：商品可按<span class="highlight">进口状态进行分类</span>；进口商有权通过商品设计获取<span class="highlight">最低税率及最优惠待遇</span>。CBP在多项行政裁定中（HQ 965751、HQ H220856）明确：若CBP认定某商品在进口时已构成商业现实，则关税工程合法合规，不会被视为欺诈或人为操作。</p>
+        </div>
+        <div class="info-card">
+          <h4>祖父条款保护</h4>
+          <p>自2018年起SDVOSB授权正式生效。2020年依据国际贸易管理局和美国总务管理局裁定，关税减免资质获得「grandfathered资格」保护。目前此类特定贸易授权已不再接受新申请，使乾翔成为极少数仍具备完整授权的在营企业。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 Qualifications Value -->
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="section-label section-reveal">七大资质</div>
+    <h2 class="section-title section-reveal">七大资质对<span style="color:var(--gold)">中国出口企业的实际价值</span></h2>
+    <p class="section-desc section-reveal">行业最健全的运营资质体系，覆盖进出口全链路合规需求。</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2rem">
+      <div class="info-card section-reveal section-reveal-delay-1">
+        <h4>🛡️ SDVOSB 伤残退伍军人所有企业认证</h4>
+        <p>依据FAR Part 19.14，参与SDVOSB专属政府采购合同，享受联邦采购关税减免与快速海关处理。2018年生效，祖父条款保护，不再接受新申请。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-2">
+        <h4>🛃 CBP 海关和边境保护局进口商许可</h4>
+        <p>持有海关进口商许可，享受海关优惠关税与清关特权。所有货物依托本公司牌照完成清关申报，按优惠税率完成清关。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-1">
+        <h4>🚛 DOT 运输部注册</h4>
+        <p>运输部注册资质，货运代理和物流授权。确保国际物流运输全链路合规运营。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-2">
+        <h4>🔒 BIS 商务部工业与安全局出口许可</h4>
+        <p>管制商品出口许可，覆盖军民两用物品。该许可涵盖BIS出口管制要求，确保受管控物品合法进出口。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-3">
+        <h4>⚡ DOE 能源部授权</h4>
+        <p>能源部授权覆盖能源和科技类运输商品的进口合规，享受相关关税减免优惠。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-4">
+        <h4>🌐 ITA 国际贸易管理局合规企业</h4>
+        <p>国际贸易管理局合规认证，可享受《贸易协定法》（TAA）优惠关税率，以及USMCA、GSP等协定优惠。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-3" style="grid-column:span 2">
+        <h4>🏛️ SAM.GOV 政府联邦平台名单企业</h4>
+        <p>美国联邦采购法案官方网站SAM.GOV可查询到公司资质、备案经营品类及特殊许可资质。确保所有授权可查证、可追溯。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 板块4: 真实报价对比 -->
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="section-label section-reveal">真实报价对比</div>
+    <h2 class="section-title section-reveal">能源系统配件<span style="color:var(--gold)">关税优化对比</span></h2>
+    <p class="section-desc section-reveal">以能源系统配件为例，展示乾翔关税优化前后的实际价格差异，数据真实可查。</p>
+    <div class="section-reveal section-reveal-delay-1" style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr><th>产品</th><th>HS编码</th><th>货值</th><th>原始关税率</th><th>乾翔优化后</th><th>节省幅度</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>双极板 EBP/MBP</strong></td>
+            <td>8507.90.80</td>
+            <td>$30,800</td>
+            <td style="color:rgba(255,255,255,0.5);text-decoration:line-through">38.4%</td>
+            <td style="color:var(--gold);font-weight:700">30.7%</td>
+            <td style="color:var(--gold);font-weight:700">约20%</td>
+          </tr>
+          <tr>
+            <td><strong>碳毡 Carbon Felt</strong></td>
+            <td>6815.13.00</td>
+            <td>$10,830</td>
+            <td style="color:rgba(255,255,255,0.5);text-decoration:line-through">35%</td>
+            <td style="color:var(--gold);font-weight:700">28%</td>
+            <td style="color:var(--gold);font-weight:700">约20%</td>
+          </tr>
+          <tr>
+            <td><strong>钢制模块化单元</strong></td>
+            <td>9406.20</td>
+            <td>$50,000+</td>
+            <td style="color:rgba(255,255,255,0.5);text-decoration:line-through">40%</td>
+            <td style="color:var(--gold);font-weight:700">32%</td>
+            <td style="color:var(--gold);font-weight:700">约20%</td>
+          </tr>
+          <tr>
+            <td><strong>肽类化工产品</strong></td>
+            <td>2933.99.79</td>
+            <td>$75,890</td>
+            <td style="color:rgba(255,255,255,0.5);text-decoration:line-through">35%</td>
+            <td style="color:var(--gold);font-weight:700">28%</td>
+            <td style="color:var(--gold);font-weight:700">约20%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:2rem;padding:1.5rem;background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.3);border-radius:12px" class="section-reveal section-reveal-delay-2">
+      <h4 style="color:var(--gold);font-weight:700;margin-bottom:0.5rem">报价说明</h4>
+      <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.8">以上报价均为2026年真实签发数据，包含MFN基础税率、S.301条款附加税、S.122对等关税等全部组成部分。乾翔打包报价已涵盖全部合规成本，无隐藏费用。报价签发后15天内有效。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 板块5: 关税优化原理 -->
+<section class="section content-block-alt">
+  <div class="section-inner">
+    <div class="section-label section-reveal">关税优化原理</div>
+    <h2 class="section-title section-reveal">深入理解<span style="color:var(--gold)">关税构成与优化逻辑</span></h2>
+    <p class="section-desc section-reveal">了解美国进口关税的三大组成部分，才能理解乾翔如何合法拆解并优化每一分关税成本。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem">
+      <div class="info-card section-reveal section-reveal-delay-1">
+        <h4>MFN 最惠国税率</h4>
+        <p>Most Favored Nation税率是WTO框架下美国对所有成员国适用的基础关税税率。不同HS编码对应不同MFN税率，通常在0%-10%之间。这是关税优化的第一层基础。乾翔通过精准HS编码分类，确保产品适用最低合法MFN税率。例如双极板MFN税率为3.4%，碳毡为2.5%。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-2">
+        <h4>S.301 条款附加税</h4>
+        <p>Section 301条款是美国贸易代表办公室(USTR)基于《1974年贸易法》第301条对中国商品征收的额外关税。2025年该条款覆盖范围进一步扩大，核心产品税率高达25%-100%。乾翔通过归类策略、转运方案和FTA协定利用，合法规避或降低S.301附加税的适用范围。</p>
+      </div>
+      <div class="info-card section-reveal section-reveal-delay-3">
+        <h4>S.122 对等关税</h4>
+        <p>Section 122条款是总统基于国家紧急状态权力征收的对等关税(Reciprocal Tariff)，2025年起对中国商品普遍适用10%-50%的附加税率。该条款具有临时性特征，可通过贸易谈判和合规调整降低适用税率。乾翔团队密切跟踪政策变化，为客户争取最优税率窗口期。</p>
+      </div>
+    </div>
+    <div style="margin-top:2rem;padding:2rem;background:rgba(200,150,62,0.08);border:1px solid rgba(200,150,62,0.3);border-radius:12px" class="section-reveal">
+      <h4 style="color:var(--gold);font-weight:700;margin-bottom:1rem">乾翔合法优化路径</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem">
+        <div style="padding:1rem;background:rgba(255,255,255,0.04);border-radius:8px">
+          <div style="font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:0.3rem">第一步</div>
+          <div style="font-weight:700;margin-bottom:0.3rem">HS编码精准分类</div>
+          <p style="font-size:0.85rem;color:var(--text-secondary)">基于2万+编码数据库，为产品匹配最有利的海关分类编码，从源头降低基础税率。</p>
+        </div>
+        <div style="padding:1rem;background:rgba(255,255,255,0.04);border-radius:8px">
+          <div style="font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:0.3rem">第二步</div>
+          <div style="font-weight:700;margin-bottom:0.3rem">FTA协定利用</div>
+          <p style="font-size:0.85rem;color:var(--text-secondary)">充分利用RCEP、USMCA、GSP等自贸协定优惠税率，合法降低S.301和MFN税率。</p>
+        </div>
+        <div style="padding:1rem;background:rgba(255,255,255,0.04);border-radius:8px">
+          <div style="font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:0.3rem">第三步</div>
+          <div style="font-weight:700;margin-bottom:0.3rem">SDVOSB资质减税</div>
+          <p style="font-size:0.85rem;color:var(--text-secondary)">依托联邦采购条例FAR 19.14条款，通过SDVOSB资质享受政府采购关税减免和快速清关。</p>
+        </div>
+        <div style="padding:1rem;background:rgba(255,255,255,0.04);border-radius:8px">
+          <div style="font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:0.3rem">第四步</div>
+          <div style="font-weight:700;margin-bottom:0.3rem">打包合规申报</div>
+          <p style="font-size:0.85rem;color:var(--text-secondary)">在ACE系统下合法申报，全部流程可追溯、可审计，确保100%合规通过率。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 板块6: 适用产品类型 -->
+<section class="section content-block">
+  <div class="section-inner">
+    <div class="section-label section-reveal">适用产品类型</div>
+    <h2 class="section-title section-reveal">覆盖五大品类<span style="color:var(--gold)">多行业验证</span></h2>
+    <p class="section-desc section-reveal">乾翔关税优化服务已覆盖化工原料、电子产品、新能源、机械配件、食品原料五大核心品类。</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem">
+      <div class="info-card cat-card cat-chem section-reveal section-reveal-delay-1">
+          <h4>化工原料</h4>
+        <p>肽类化工产品、碳毡、有机化合物等。某客户将肽类产品综合税率从35%降至约28%，单票节省约20%。化工品分类复杂，专业归类可显著降低关税成本。</p>
+      </div>
+      <div class="info-card cat-card cat-elec section-reveal section-reveal-delay-2">
+          <h4>电子产品</h4>
+        <p>B超诊断仪、电池组件、半导体配件等。某客户B超诊断仪关税从75.48%降至约60%，降幅约20%。电子产品通常涉及多层税率叠加，乾翔通过精确归类和协定利用实现大幅优化。</p>
+      </div>
+      <div class="info-card cat-card cat-energy section-reveal section-reveal-delay-3">
+        <h4>新能源</h4>
+        <p>能源系统双极板、储能电池组件、光伏配件等。双极板从38.4%降至约30.7%省约20%，碳毡从35%降至约28%省约20%。新能源产品受益于DOE能源部授权和SDVOSB双重资质优势。</p>
+      </div>
+      <div class="info-card cat-card cat-mach section-reveal section-reveal-delay-4">
+          <h4>机械配件</h4>
+        <p>钢制模块化单元、冷轧板桩、轮胎等。钢制模块化单元从40%降至约32%，降幅约20%。重型机械类产品关税基数高，优化空间最大。</p>
+      </div>
+      <div class="info-card cat-card cat-food section-reveal section-reveal-delay-1" style="grid-column:span 2">
+          <h4>食品原料</h4>
+        <p>鱼油产品、食品添加剂、营养保健品等。鱼油类产品从37.9%降至约30.3%，降幅约20%。食品类进口需额外满足FDA注册和FSVP供应商验证要求，乾翔提供FDA合规一站式服务。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-overlay"></div>
+  <canvas id="footerParticles"></canvas>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:0.5rem">
+          <img src="logo.png" alt="乾翔衍庆" style="height:32px">
+          <span style="font-weight:700;font-size:1rem">乾翔衍庆</span>
+        </a>
+        <p>四川乾翔衍庆物流科技有限公司，中美合资企业，美方 Limitless Evolution LLC 为纯美资 SDVOSB 股东方。专注于中美跨境贸易的关税减免、DDP贸易、IOR备案与专业清关服务，助力企业降本增效。</p>
+      </div>
+      <div>
+        <h4>服务</h4>
+        <ul>
+          <li><a href="tariff.html">中美关税减免</a></li>
+          <li><a href="ddp.html">DDP贸易</a></li>
+          <li><a href="ior.html">合规IOR备案</a></li>
+          <li><a href="customs.html">一站式清关</a></li>
+          <li><a href="partner.html">渠道合作</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>关于</h4>
+        <ul>
+          <li><a href="index.html">公司简介</a></li>
+          <li><a href="tariff.html">关税优化</a></li>
+          <li><a href="ddp.html">DDP贸易</a></li>
+          <li><a href="partner.html">渠道合作</a></li>
+          <li><a href="contact.html">联系我们</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>联系我们</h4>
+        <div class="footer-contact-item"><span class="footer-contact-icon">&#9742;</span><span>18228095651（Steven）</span></div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">&#9993;</span><span>Steven@qxyqtech.cn</span></div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">&#9873;</span><span>中国·四川省成都市高新区天府大道北段1700号环球中心E2-1806</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 四川乾翔衍庆物流科技有限公司 QianXiang YanQing Logistics Technology Co., Ltd. All rights reserved.</span>
+      <span>中美合资 — 美方 SDVOSB 股东方 Limitless Evolution · 专业的事，交给乾翔</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var glow=document.getElementById('mouseGlow'),mx=-500,my=-500,cx=-500,cy=-500;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+  (function tick(){cx+=(mx-cx)*0.06;cy+=(my-cy)*0.06;glow.style.left=cx+'px';glow.style.top=cy+'px';requestAnimationFrame(tick)})();
+})();
+(function(){
+  var grid=document.getElementById('hexGrid');
+  for(var i=0;i<15;i++){var hex=document.createElement('div');hex.className='hex-shape';var size=Math.random()*80+40;hex.style.width=size+'px';hex.style.height=size+'px';hex.style.left=Math.random()*100+'%';hex.style.top=Math.random()*100+'%';hex.style.animationDelay=(Math.random()*10)+'s';hex.style.animationDuration=(Math.random()*15+15)+'s';grid.appendChild(hex)}
+  window.addEventListener('scroll',function(){grid.style.transform='rotate('+window.pageYOffset*0.02+'deg)'},{passive:true});
+})();
+(function(){
+  var c=document.getElementById('hero-canvas'),x=c.getContext('2d'),W,H,p=[],a=[],m={x:W/2,y:H/2};
+  function r(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;m.x=W/2;m.y=H/2}
+  window.addEventListener('resize',r);r();
+  function N(){this.reset(true)}
+  N.prototype.reset=function(i){this.x=Math.random()*W;this.y=i?Math.random()*H:H+10;this.s=Math.random()*3+1;this.vx=(Math.random()-0.5)*0.4;this.vy=-Math.random()*0.7-0.3;this.al=Math.random()*0.5+0.3;this.lf=Math.random()*500+200;this.ag=i?Math.random()*this.lf:0};
+  N.prototype.u=function(){this.x+=this.vx;this.y+=this.vy;this.ag++;if(this.ag>this.lf||this.x<-20||this.x>W+20||this.y<-20)this.reset(false);var dx=m.x-this.x,dy=m.y-this.y,d=Math.sqrt(dx*dx+dy*dy);if(d<180){this.vx+=dx*0.00008;this.vy+=dy*0.00008}};
+  N.prototype.d=function(){var f=1-this.ag/this.lf;x.beginPath();x.arc(this.x,this.y,this.s,0,Math.PI*2);x.fillStyle='rgba(200,150,62,'+this.al*f+')';x.fill()};
+  function A(){this.x=Math.random()*W;this.y=Math.random()*H;this.s=Math.random()*6+4;this.vx=(Math.random()-0.5)*0.1;this.vy=-Math.random()*0.15-0.03;this.ph=Math.random()*Math.PI*2;this.al=0.06}
+  A.prototype.u=function(){this.x+=this.vx;this.y+=this.vy;this.ph+=0.012;if(this.y<-40||this.x<-40||this.x>W+40){this.x=Math.random()*W;this.y=H+40}};
+  A.prototype.d=function(){var g=Math.sin(this.ph)*0.5+0.5;x.beginPath();x.arc(this.x,this.y,this.s+g*5,0,Math.PI*2);x.shadowColor='rgba(200,150,62,'+(0.6*g)+')';x.shadowBlur=25+20*g;x.fillStyle='rgba(200,150,62,'+(this.al+g*0.12)+')';x.fill();x.shadowBlur=0};
+  for(var i=0;i<120;i++)p.push(new N());for(var i=0;i<8;i++)a.push(new A());
+  (function an(){
+    x.clearRect(0,0,W,H);
+    for(var i=0;i<p.length;i++){for(var j=i+1;j<p.length;j++){var dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<120){x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle='rgba(200,150,62,'+0.1*(1-d/120)+')';x.lineWidth=0.5;x.stroke()}}p[i].u();p[i].d()}
+    a.forEach(function(o){o.u();o.d()});
+    requestAnimationFrame(an);
+  })();
+  c.addEventListener('mousemove',function(e){var b=c.getBoundingClientRect();m.x=e.clientX-b.left;m.y=e.clientY-b.top});
+  c.addEventListener('mouseleave',function(){m.x=W/2;m.y=H/2});
+})();
+(function(){
+  var canvas=document.getElementById('footerParticles'),ctx=canvas.getContext('2d'),W,H,pts=[];
+  function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight}
+  window.addEventListener('resize',resize);resize();
+  function FP(){this.reset()}
+  FP.prototype.reset=function(){this.x=Math.random()*W;this.y=H+Math.random()*20;this.r=Math.random()*2+0.5;this.vx=(Math.random()-0.5)*0.3;this.vy=-Math.random()*0.6-0.2;this.alpha=Math.random()*0.6+0.2;this.life=Math.random()*300+100;this.age=0};
+  FP.prototype.update=function(){this.x+=this.vx;this.y+=this.vy;this.age++;if(this.age>this.life||this.y<-10)this.reset()};
+  FP.prototype.draw=function(){var fade=Math.sin(Math.PI*this.age/this.life);ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle='rgba(200,150,62,'+this.alpha*fade+')';ctx.fill()};
+  for(var i=0;i<40;i++)pts.push(new FP());
+  (function animate(){ctx.clearRect(0,0,W,H);pts.forEach(function(p){p.update();p.draw()});requestAnimationFrame(animate)})();
+})();
+gsap.registerPlugin(ScrollTrigger);
+gsap.to('#progressBar',{width:'100%',ease:'none',scrollTrigger:{trigger:'body',start:'top top',end:'bottom bottom',scrub:0.3}});
+window.addEventListener('scroll',function(){var nav=document.getElementById('nav');if(window.pageYOffset>100)nav.classList.add('scrolled');else nav.classList.remove('scrolled')},{passive:true});
+document.querySelectorAll('.section-reveal').forEach(function(el){ScrollTrigger.create({trigger:el,start:'top 88%',onEnter:function(){el.classList.add('active')},once:true})});
+</script>
+<script>
+(function(){
+  var menu=document.getElementById('mobileMenu');
+  var toggle=document.getElementById('mobileToggle');
+  var close=document.getElementById('mobileClose');
+  function openMenu(){menu.classList.add('active')}
+  function closeMenu(){menu.classList.remove('active')}
+  toggle.addEventListener('click',openMenu);
+  close.addEventListener('click',closeMenu);
+  toggle.addEventListener('touchstart',function(e){e.preventDefault();openMenu()},{passive:false});
+  close.addEventListener('touchstart',function(e){e.preventDefault();closeMenu()},{passive:false});
+  var links=menu.querySelectorAll('a');
+  for(var i=0;i<links.length;i++){
+    links[i].addEventListener('click',closeMenu);
+    links[i].addEventListener('touchstart',closeMenu);
+  }
+})();
+</script>
+</body>
+</html>
